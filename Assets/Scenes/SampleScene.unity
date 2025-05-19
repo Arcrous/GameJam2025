@@ -222,6 +222,9 @@ GameObject:
   - component: {fileID: 678691753}
   - component: {fileID: 678691755}
   - component: {fileID: 678691754}
+  - component: {fileID: 678691758}
+  - component: {fileID: 678691757}
+  - component: {fileID: 678691756}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -317,9 +320,62 @@ SpriteRenderer:
   m_Size: {x: 3.5625, y: 3.8125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &678691756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678691752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689c2d7dc96d9b44699ea8fafc1189ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onlyOneTrait: 0
+  onlyOneMultiplier: 5
+  onlyOneVFX: {fileID: 0}
+--- !u!114 &678691757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678691752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee783e8ae06ca7a4f9691241fbbec3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossController: {fileID: 0}
+  bossSpawnPoint: {fileID: 0}
+--- !u!114 &678691758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678691752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a53dc59f33adf6449cf1764db2724c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 200
+  attackPower: 15
+  attackInterval: 1.5
+  numWeaknesses: 4
+  healthBar: {fileID: 0}
+  weaknessIconsContainer: {fileID: 0}
+  weaknessIconPrefab: {fileID: 0}
+  attackIndicator: {fileID: 0}
+  attackEffect: {fileID: 0}
+  damageParticle: {fileID: 0}
+  weaknessRevealEffect: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

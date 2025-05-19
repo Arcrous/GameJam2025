@@ -1,0 +1,22 @@
+Inheritence-based, turn-based + QTE game inside of Unity 2D
+
+[Player]
+The player can attack on their turn.
+When it's the boss's turn, the player has the option to dodge the attack (if they successfully dodge, they can counter attack maybe?)
+
+[Boss]
+Boss have X amount of weaknesses (minimum of 3, max of 6)
+Boss can attack on their turn 
+Boss receive more damage if the player has a trait that match it weakness
+Boss have a display under their health bar of what trait is their weakness
+
+[Game loop]
+Player will control Hero
+
+At the start of the game, Player will be prompt to choose a "Trait" for the Hero to acquire (this can be like: Light, Fire, Physical, Magic, etc.)
+The boss will have X of weaknesses that are randomized from the Player's trait.
+
+If the Hero is killed when fighting the boss, the player can choose 2nd Generation Hero who inherited the trait of the previous Hero and pick 1 more. 
+Example: Generation 3 inherits the traits of the previous 2 plus 1 more trait for the Player to choose.
+This process continues until the player kills the boss OR have reached Generation (+ 1 of number of weaknesses the boss) have. 
+Once the player has reached Generation (+ 1 of number of weaknesses the boss) and they failed to kill the boss, Game Over.

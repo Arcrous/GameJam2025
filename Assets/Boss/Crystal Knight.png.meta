@@ -1,0 +1,1208 @@
+fileFormatVersion: 2
+guid: fa121d579db7f304a823d41d01cf212e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5131522090414123219
+    second: Crystal Knight_0
+  - first:
+      213: 5018455329802450501
+    second: Crystal Knight_1
+  - first:
+      213: -126723564870529217
+    second: Crystal Knight_2
+  - first:
+      213: 8065273978009069200
+    second: Crystal Knight_3
+  - first:
+      213: 6946809258703273754
+    second: Crystal Knight_4
+  - first:
+      213: 8852754003443616771
+    second: Crystal Knight_5
+  - first:
+      213: -2489480259529968126
+    second: Crystal Knight_6
+  - first:
+      213: -2751463472901016715
+    second: Crystal Knight_7
+  - first:
+      213: -3792235140550032430
+    second: Crystal Knight_8
+  - first:
+      213: 3289520988964553617
+    second: Crystal Knight_9
+  - first:
+      213: -5774259872601723918
+    second: Crystal Knight_10
+  - first:
+      213: 5405924260640164996
+    second: Crystal Knight_11
+  - first:
+      213: 3918691471817088134
+    second: Crystal Knight_12
+  - first:
+      213: 7320355815311894636
+    second: Crystal Knight_13
+  - first:
+      213: 5931132023632277265
+    second: Crystal Knight_14
+  - first:
+      213: 1166807973006986421
+    second: Crystal Knight_15
+  - first:
+      213: 2618171728192024515
+    second: Crystal Knight_16
+  - first:
+      213: 4556320986256383477
+    second: Crystal Knight_17
+  - first:
+      213: 4032815286457292896
+    second: Crystal Knight_18
+  - first:
+      213: 5438110200503284525
+    second: Crystal Knight_19
+  - first:
+      213: 6850065625925493506
+    second: Crystal Knight_20
+  - first:
+      213: -230463360397349737
+    second: Crystal Knight_21
+  - first:
+      213: -779991488087960974
+    second: Crystal Knight_22
+  - first:
+      213: 4521579843261188260
+    second: Crystal Knight_23
+  - first:
+      213: 2768890894122473987
+    second: Crystal Knight_24
+  - first:
+      213: 2652414802218395101
+    second: Crystal Knight_25
+  - first:
+      213: -7958618341883076203
+    second: Crystal Knight_26
+  - first:
+      213: 6444111504697269205
+    second: Crystal Knight_27
+  - first:
+      213: -5989906436348579938
+    second: Crystal Knight_28
+  - first:
+      213: -4522389356699099494
+    second: Crystal Knight_29
+  - first:
+      213: 4897549687543774502
+    second: Crystal Knight_30
+  - first:
+      213: 7487509345861561508
+    second: Crystal Knight_31
+  - first:
+      213: 7737690930166259084
+    second: Crystal Knight_32
+  - first:
+      213: -8864916043416603093
+    second: Crystal Knight_33
+  - first:
+      213: 7297977191119618267
+    second: Crystal Knight_34
+  - first:
+      213: -784372440539657334
+    second: Crystal Knight_35
+  - first:
+      213: 8263994478705254093
+    second: Crystal Knight_36
+  - first:
+      213: 789234338594152770
+    second: Crystal Knight_37
+  - first:
+      213: -7857460586597516616
+    second: Crystal Knight_38
+  - first:
+      213: -1585873805050805999
+    second: Crystal Knight_39
+  - first:
+      213: 6845606503716377161
+    second: Crystal Knight_40
+  - first:
+      213: -8146326332647981563
+    second: Crystal Knight_41
+  - first:
+      213: -7223205640104681722
+    second: Crystal Knight_42
+  - first:
+      213: -8453897064124062128
+    second: Crystal Knight_43
+  - first:
+      213: 1313137382326096114
+    second: Crystal Knight_44
+  - first:
+      213: -6338414595484549817
+    second: Crystal Knight_45
+  - first:
+      213: 2991582087794295190
+    second: Crystal Knight_46
+  - first:
+      213: -8301863141653472753
+    second: Crystal Knight_47
+  - first:
+      213: -1069045636914382667
+    second: Crystal Knight_48
+  - first:
+      213: -3760675664673104446
+    second: Crystal Knight_49
+  - first:
+      213: 3741797341204556263
+    second: Crystal Knight_50
+  - first:
+      213: 2195626887683263954
+    second: Crystal Knight_51
+  - first:
+      213: 5696488788955411456
+    second: Crystal Knight_52
+  - first:
+      213: -1347982905448918933
+    second: Crystal Knight_53
+  - first:
+      213: 5422637363100064807
+    second: Crystal Knight_54
+  - first:
+      213: -1597383853069310549
+    second: Crystal Knight_55
+  - first:
+      213: -3029031849006766371
+    second: Crystal Knight_56
+  - first:
+      213: 8618684877296901902
+    second: Crystal Knight_57
+  - first:
+      213: 6423538147116568469
+    second: Crystal Knight_58
+  - first:
+      213: -8941773340560895812
+    second: Crystal Knight_59
+  - first:
+      213: -5731948810038964851
+    second: Crystal Knight_60
+  - first:
+      213: 862243918404789485
+    second: Crystal Knight_61
+  - first:
+      213: 5933018417999197201
+    second: Crystal Knight_62
+  - first:
+      213: -321014241892004232
+    second: Crystal Knight_63
+  - first:
+      213: -2524193679858080716
+    second: Crystal Knight_64
+  - first:
+      213: 5597692043589214650
+    second: Crystal Knight_65
+  - first:
+      213: 7228879347672517089
+    second: Crystal Knight_66
+  - first:
+      213: -1522756829074550126
+    second: Crystal Knight_67
+  - first:
+      213: -7472489111530930237
+    second: Crystal Knight_68
+  - first:
+      213: -1242212464681120672
+    second: Crystal Knight_69
+  - first:
+      213: 1977073374982330854
+    second: Crystal Knight_70
+  - first:
+      213: 2279602516349151698
+    second: Crystal Knight_71
+  - first:
+      213: 5368886821072752971
+    second: Crystal Knight_72
+  - first:
+      213: 8628322950517366105
+    second: Crystal Knight_73
+  - first:
+      213: 342254905200669997
+    second: Crystal Knight_74
+  - first:
+      213: 2226087187774765716
+    second: Crystal Knight_75
+  - first:
+      213: 9085462949259872739
+    second: Crystal Knight_76
+  - first:
+      213: -7793985177996179794
+    second: Crystal Knight_77
+  - first:
+      213: 3862891766631733770
+    second: Crystal Knight_78
+  - first:
+      213: 9012656509725116653
+    second: Crystal Knight_79
+  - first:
+      213: 8765202086965386810
+    second: Crystal Knight_80
+  - first:
+      213: 4616338309458767641
+    second: Crystal Knight_81
+  - first:
+      213: 4574257551615961789
+    second: Crystal Knight_82
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Crystal Knight_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 699
+        width: 57
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba3f4f1e61353d04bbc86473f4b4159c
+      internalID: -1189964791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 698
+        width: 55
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79c2a6537976d9d49ada63642f23442b
+      internalID: 1756971155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_2
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 699
+        width: 51
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b23450298eea5c49a84e7b11fd67ce4
+      internalID: -1943430255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_3
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 699
+        width: 53
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3d940ff02c713c4ea978c581bdcab0e
+      internalID: 1681570011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_4
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 663
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5903c9dd4d17f4b45baf4920723e28da
+      internalID: -828271997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 660
+        width: 35
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0a2976f1117f644a8011573865b1517
+      internalID: -1727030699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_6
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 661
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30b46f295c3b17143b182096b923ad8b
+      internalID: -957522514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_8
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 654
+        width: 39
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b9b5049fea1089429bb310b83333848
+      internalID: -1067536326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_7
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 655
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1127a08af0627b4fb92be9806408b48
+      internalID: 147266946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_11
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 383
+        width: 36
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b2fc0642310d6647b836621f499009a
+      internalID: 2005178694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_13
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 381
+        width: 47
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 520cfe4510958964cbdbad2c157948f0
+      internalID: -247982851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_12
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 380
+        width: 40
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beadc4acb2aaf6a4ca2eebbf59088e9a
+      internalID: -1083846291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_14
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 299
+        width: 57
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 430c2057ab13bfe45b15790c5b8dd9d8
+      internalID: -1118762590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_15
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 299
+        width: 51
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3001ab04c653f6e40a5259887ec2f3d0
+      internalID: -103093564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_16
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 297
+        width: 57
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d63f3a7fcbef4640b0cf84e25da925c
+      internalID: 169331352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_17
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 296
+        width: 57
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce9f16a60f2c18f4c8f4db09f98646a8
+      internalID: 1438206287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_18
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 296
+        width: 47
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c967e24454f0ab4ca1340b1f62020d6
+      internalID: -836342986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_19
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 219
+        width: 57
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec390156b5d8837408b789ee7a9da183
+      internalID: -1425801838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_20
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 219
+        width: 51
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 640d75bd746e0be4c8200dda67e3125e
+      internalID: -1216292589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_21
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 219
+        width: 56
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59a706de8e2262e44a72e274cb9c8331
+      internalID: 1101168561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_22
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 217
+        width: 58
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 519f44707b9b3304281cdc7b785155ed
+      internalID: -941402117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_23
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 221
+        width: 47
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46c24cab152e5ee449587748f0862290
+      internalID: 575783966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_24
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 139
+        width: 51
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc98e42316d74554799bf7bab73cff68
+      internalID: -651656312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_25
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 139
+        width: 63
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 617ed2eb9eb12a146834449d57d09e9b
+      internalID: -824582692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_27
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 126
+        width: 41
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49b898db2a825b341a163b8a233810cb
+      internalID: 1575179953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_28
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 143
+        width: 14
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cc0928bc9347944a8abf0c8a38bbb93
+      internalID: 1697281882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_29
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 59
+        width: 51
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3f2e607c1ca9ce4b9cd6c654d85d695
+      internalID: 731489976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_26
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 142
+        width: 64
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fc7e6f8bc218274facbffcb706e5087
+      internalID: 500971872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_32
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 84
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b34d12228e119946ab6e00e824ca10c
+      internalID: 921491043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_9
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 570
+        width: 40
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02b0c58a66beac744a418689f631946a
+      internalID: 1498945229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_10
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 494
+        width: 44
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8a3f2f60476c664a8fae7fc8241859e
+      internalID: -1827875892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_30
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 114
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 327de59c2f7a63b4eb8fdf5067761b09
+      internalID: -1709016523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_31
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 114
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d658e055d41242478ffa6eb2524d99f
+      internalID: -1409567936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_33
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 50
+        width: 30
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10312f29cbd0b4d4e9e790a0cab6bc25
+      internalID: 1359878187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_34
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 51
+        width: 30
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3437f09a2669e3f47b0b75d0abe18724
+      internalID: -850807356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crystal Knight_35
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 48
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0299c2d8bc4e4174c8a190acf5938129
+      internalID: -913697832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c116b0bdb1ed5414ead435509f19f19a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Crystal Knight_0: -1189964791
+      Crystal Knight_1: 1756971155
+      Crystal Knight_10: -1827875892
+      Crystal Knight_11: 2005178694
+      Crystal Knight_12: -1083846291
+      Crystal Knight_13: -247982851
+      Crystal Knight_14: -1118762590
+      Crystal Knight_15: -103093564
+      Crystal Knight_16: 169331352
+      Crystal Knight_17: 1438206287
+      Crystal Knight_18: -836342986
+      Crystal Knight_19: -1425801838
+      Crystal Knight_2: -1943430255
+      Crystal Knight_20: -1216292589
+      Crystal Knight_21: 1101168561
+      Crystal Knight_22: -941402117
+      Crystal Knight_23: 575783966
+      Crystal Knight_24: -651656312
+      Crystal Knight_25: -824582692
+      Crystal Knight_26: 500971872
+      Crystal Knight_27: 1575179953
+      Crystal Knight_28: 1697281882
+      Crystal Knight_29: 731489976
+      Crystal Knight_3: 1681570011
+      Crystal Knight_30: -1709016523
+      Crystal Knight_31: -1409567936
+      Crystal Knight_32: 921491043
+      Crystal Knight_33: 1359878187
+      Crystal Knight_34: -850807356
+      Crystal Knight_35: -913697832
+      Crystal Knight_36: 529920842
+      Crystal Knight_37: -826659060
+      Crystal Knight_38: -1392908044
+      Crystal Knight_4: -828271997
+      Crystal Knight_40: 352793121
+      Crystal Knight_41: -390819897
+      Crystal Knight_42: -1645769589
+      Crystal Knight_44: 100634156
+      Crystal Knight_45: -847173249
+      Crystal Knight_46: 963098495
+      Crystal Knight_47: 1170017088
+      Crystal Knight_48: -281484503
+      Crystal Knight_49: -1991383532
+      Crystal Knight_5: -1727030699
+      Crystal Knight_51: -1131606042
+      Crystal Knight_6: -957522514
+      Crystal Knight_67: 1814041859
+      Crystal Knight_68: 28288290
+      Crystal Knight_7: 147266946
+      Crystal Knight_70: -1709415971
+      Crystal Knight_71: -937816629
+      Crystal Knight_72: 1819335775
+      Crystal Knight_74: -1883489438
+      Crystal Knight_75: -134398094
+      Crystal Knight_76: -1547009925
+      Crystal Knight_77: -160618098
+      Crystal Knight_78: -1710980057
+      Crystal Knight_79: 651939894
+      Crystal Knight_8: -1067536326
+      Crystal Knight_80: -209565710
+      Crystal Knight_81: -671834655
+      Crystal Knight_82: -1435336251
+      Crystal Knight_9: 1498945229
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -40,9 +40,6 @@ public class UIManager : MonoBehaviour
         if (attackButton != null)
             attackButton.onClick.AddListener(OnAttackButtonClicked);
 
-        if (dodgeButton != null)
-            dodgeButton.onClick.AddListener(OnDodgeButtonClicked);
-
         // Subscribe to turn changes
         TurnManager.Instance.OnTurnChanged += UpdateButtonsForTurnState;
     }
@@ -64,11 +61,6 @@ public class UIManager : MonoBehaviour
             // End player turn
             TurnManager.Instance.EndPlayerTurn();
         }
-    }
-
-    private void OnDodgeButtonClicked()
-    {
-        TurnManager.Instance.TriggerDodge();
     }
 
     private void UpdateButtonsForTurnState(TurnState newState)

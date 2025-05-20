@@ -30,12 +30,11 @@ public class PlayerController : MonoBehaviour
     
     public void Attack()
     {
-        // Will be called when it's player's turn to attack
         Debug.Log("Player attacked!");
         // Play attack animation or visual effect
         if (animator != null)
             animator.SetTrigger("Attack");
-            
+
         // Instantiate slash effect if available
         if (slashEffect != null && attackPoint != null)
             Instantiate(slashEffect, attackPoint.position, attackPoint.rotation);

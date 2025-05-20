@@ -72,7 +72,7 @@ public class TurnManager : MonoBehaviour
         GameManager.Instance.GameOver(playerWon);
     }
 
-    private IEnumerator DelayedTurnChange(TurnState nextState)
+    public IEnumerator DelayedTurnChange(TurnState nextState)
     {
         yield return new WaitForSeconds(turnDelay);
         SetTurnState(nextState);
@@ -95,5 +95,12 @@ public class TurnManager : MonoBehaviour
     public TurnState GetCurrentState()
     {
         return currentState;
+    }
+
+    public void EndEnemyTurn()
+    {
+        if (currentState != TurnState.EnemyTurn) return;
+
+        StartCoroutine(DelayedTurnChange(TurnState.PlayerTurn));
     }
 }

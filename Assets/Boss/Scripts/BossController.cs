@@ -89,6 +89,7 @@ public class BossController : MonoBehaviour
     {
         if (newState == TurnState.EnemyTurn)
         {
+            Debug.Log("It's the boss turn");
             // It's the boss's turn
             StartCoroutine(ExecuteAttack());
         }
@@ -96,6 +97,7 @@ public class BossController : MonoBehaviour
     
     private IEnumerator ExecuteAttack()
     {
+        Debug.Log("Boss is attacking");
         isAttacking = true;
         
         // Signal attack is coming to allow player to dodge
@@ -141,9 +143,9 @@ public class BossController : MonoBehaviour
                 
                 player.TakeDamage(attackPower);
             }
-            
+
             // End turn after attack is finished
-            turnManager.EndPlayerTurn(); // This will cycle back to player turn
+            turnManager.EndEnemyTurn();
         }
         
         isAttacking = false;

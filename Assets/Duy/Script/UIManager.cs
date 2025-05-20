@@ -21,6 +21,10 @@ public class UIManager : MonoBehaviour
     public Transform traitIconsContainer;
     public Image traitIconPrefab;
 
+    [Header("Combat UI")]
+    public Button attackButton;
+    public Button dodgeButton;
+
     [Header("Debug")]
     [SerializeField] private bool showAllTraits = false; // Set to true to show all available traits
 
@@ -30,6 +34,48 @@ public class UIManager : MonoBehaviour
             restartButton.onClick.AddListener(RestartGame);
 
         HideAllPanels();
+
+        if (attackButton != null)
+            attackButton.onClick.AddListener(OnAttackButtonClicked);
+
+        if (dodgeButton != null)
+            dodgeButton.onClick.AddListener(OnDodgeButtonClicked);
+
+        // Subscribe to turn changes
+        TurnManager.Instance.OnTurnChanged += UpdateButtonsForTurnState;
+    }
+
+    private void OnAttackButtonClicked()
+    {
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
+        {
+            player.Attack();
+
+            // Find the boss and apply damage
+            BossController boss = FindFirstObjectByType<BossController>();
+            if (boss != null)
+            {
+                boss.ReceivePlayerAttack();
+            }
+
+            // End player turn
+            TurnManager.Instance.EndPlayerTurn();
+        }
+    }
+
+    private void OnDodgeButtonClicked()
+    {
+        TurnManager.Instance.TriggerDodge();
+    }
+
+    private void UpdateButtonsForTurnState(TurnState newState)
+    {
+        if (attackButton != null)
+            attackButton.interactable = (newState == TurnState.PlayerTurn);
+
+        if (dodgeButton != null)
+            dodgeButton.interactable = (newState == TurnState.EnemyTurn);
     }
 
     private void HideAllPanels()

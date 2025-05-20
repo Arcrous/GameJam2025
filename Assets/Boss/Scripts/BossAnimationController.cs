@@ -246,7 +246,7 @@ public class BossAnimationController : MonoBehaviour
             GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
             
             // Target the player
-            PlayerController player = FindObjectOfType<PlayerController>();
+            PlayerController player = FindFirstObjectByType<PlayerController>();
             if (player != null && projectile.GetComponent<Projectile>() != null)
             {
                 projectile.GetComponent<Projectile>().SetTarget(player.transform);
@@ -306,7 +306,7 @@ public class BossAnimationController : MonoBehaviour
     /// </summary>
     private void CheckPlayerInCell(Vector3 cellPosition, float cellRadius)
     {
-        PlayerController player = FindObjectOfType<PlayerController>();
+        PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null && bossController != null)
         {
             // Check if player is in this cell
@@ -349,7 +349,7 @@ public class BossAnimationController : MonoBehaviour
     public void AnimationEventDealDamage()
     {
         // This method can be called from animation events to deal damage at specific frames
-        PlayerController player = FindObjectOfType<PlayerController>();
+        PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null && bossController != null && !player.IsDodging())
         {
             player.TakeDamage(bossController.attackPower);

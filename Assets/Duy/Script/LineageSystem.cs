@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class LineageSystem : MonoBehaviour
 {
-    [SerializeField] private int maxGenerations = 7; // Max boss weaknesses + 1
+    public int maxGenerations = 7; // Max boss weaknesses + 1
 
     private int currentGeneration = 1;
     private List<TraitType> inheritedTraits = new List<TraitType>();
@@ -19,11 +19,23 @@ public class LineageSystem : MonoBehaviour
 
         // Let UI know we need to choose a trait
         RequestTraitSelection();
+
+        // Notify any listeners of generation change
+        if (OnGenerationChanged != null)
+            OnGenerationChanged(currentGeneration, inheritedTraits);
     }
 
     public void AddTrait(TraitType traitType)
     {
+        // Check if we already have this trait
+        if (inheritedTraits.Contains(traitType))
+        {
+            Debug.LogWarning("Attempting to add duplicate trait: " + traitType);
+            return;
+        }
+
         inheritedTraits.Add(traitType);
+        Debug.Log("Trait added to generation " + currentGeneration + ": " + traitType);
 
         // Notify any listeners (UI, player controller, etc.)
         if (OnGenerationChanged != null)
@@ -33,22 +45,36 @@ public class LineageSystem : MonoBehaviour
     public void AdvanceGeneration()
     {
         currentGeneration++;
+        Debug.Log("Advanced to generation " + currentGeneration);
 
         if (currentGeneration > maxGenerations)
         {
             // Game over - too many generations
+            Debug.Log("Game Over - Max generations reached: " + currentGeneration);
             GameManager.Instance.GameOver(false);
             return;
         }
 
         // Let UI know we need to choose a new trait
         RequestTraitSelection();
+
+        // Notify any listeners of generation change
+        if (OnGenerationChanged != null)
+            OnGenerationChanged(currentGeneration, inheritedTraits);
     }
 
     private void RequestTraitSelection()
     {
         // This would typically call a UI manager to show trait selection screen
-        FindObjectOfType<UIManager>().ShowTraitSelection();
+        UIManager uiManager = FindFirstObjectByType<UIManager>();
+        if (uiManager != null)
+        {
+            uiManager.ShowTraitSelection();
+        }
+        else
+        {
+            Debug.LogError("UIManager not found when requesting trait selection");
+        }
     }
 
     public int GetCurrentGeneration()

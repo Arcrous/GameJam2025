@@ -46,7 +46,7 @@ public class BossController : MonoBehaviour
         }
         
         // Get player reference
-        player = FindObjectOfType<PlayerController>();
+        player = FindFirstObjectByType<PlayerController>();
         
         // Get weaknesses from GameManager
         weaknesses = GameManager.Instance.GetBossWeaknesses();

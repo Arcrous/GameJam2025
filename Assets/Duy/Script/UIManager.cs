@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public GameObject traitSelectionPanel;
     public Transform traitButtonContainer;
     public Button traitButtonPrefab;
+    [SerializeField] private int traitsToShow = 3; // Configurable number of traits to show
 
     [Header("Game Over")]
     public GameObject gameOverPanel;
@@ -19,6 +20,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI generationText;
     public Transform traitIconsContainer;
     public Image traitIconPrefab;
+
+    [Header("Debug")]
+    [SerializeField] private bool showAllTraits = false; // Set to true to show all available traits
 
     private void Start()
     {
@@ -55,7 +59,7 @@ public class UIManager : MonoBehaviour
             List<Trait> availableTraits = new List<Trait>();
             List<TraitType> currentTraits = new List<TraitType>();
 
-            LineageSystem lineageSystem = FindObjectOfType<LineageSystem>();
+            LineageSystem lineageSystem = FindFirstObjectByType<LineageSystem>();
             if (lineageSystem != null)
             {
                 currentTraits = lineageSystem.GetInheritedTraits();
@@ -71,17 +75,27 @@ public class UIManager : MonoBehaviour
                 }
             }
 
-            // Choose 3 random traits to offer
-            List<Trait> offeredTraits = new List<Trait>();
-            while (offeredTraits.Count < 3 && availableTraits.Count > 0)
+            // Get traits to display - either all or random selection
+            List<Trait> traitsToDisplay = new List<Trait>();
+
+            if (showAllTraits || availableTraits.Count <= traitsToShow)
             {
-                int randomIndex = Random.Range(0, availableTraits.Count);
-                offeredTraits.Add(availableTraits[randomIndex]);
-                availableTraits.RemoveAt(randomIndex);
+                // Show all available traits
+                traitsToDisplay = new List<Trait>(availableTraits);
+            }
+            else
+            {
+                // Choose random traits to offer
+                while (traitsToDisplay.Count < traitsToShow && availableTraits.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, availableTraits.Count);
+                    traitsToDisplay.Add(availableTraits[randomIndex]);
+                    availableTraits.RemoveAt(randomIndex);
+                }
             }
 
             // Create buttons for each trait
-            foreach (Trait trait in offeredTraits)
+            foreach (Trait trait in traitsToDisplay)
             {
                 Button traitButton = Instantiate(traitButtonPrefab, traitButtonContainer);
                 TextMeshProUGUI buttonText = traitButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -97,14 +111,29 @@ public class UIManager : MonoBehaviour
                     OnTraitSelected(traitType);
                 });
 
-                // Add tooltip/description if needed
+                // Add tooltip with trait description
+                TooltipTrigger tooltipTrigger = traitButton.gameObject.AddComponent<TooltipTrigger>();
+                if (tooltipTrigger != null)
+                {
+                    tooltipTrigger.tooltipText = trait.description;
+                }
             }
+
+            // Update the HUD to show current generation
+            UpdateHUD();
         }
     }
 
     private void OnTraitSelected(TraitType traitType)
     {
+        // Hide the trait selection panel immediately
+        if (traitSelectionPanel != null)
+            traitSelectionPanel.SetActive(false);
+
+        // Pass the selection to the GameManager
         GameManager.Instance.TraitSelected(traitType);
+
+        // Update the HUD with new traits
         UpdateHUD();
     }
 
@@ -132,21 +161,31 @@ public class UIManager : MonoBehaviour
 
     private void RestartGame()
     {
-        // Call GameManager to restart
-        GameManager.Instance.StartNewGame();
+        // Find GameInitializer first if possible for proper sequencing
+        GameInitializer initializer = FindFirstObjectByType<GameInitializer>();
+        if (initializer != null)
+        {
+            initializer.RestartGame();
+        }
+        else
+        {
+            // Fallback to direct restart
+            GameManager.Instance.StartNewGame();
+        }
     }
 
     public void UpdateHUD()
     {
         // Update generation text
-        LineageSystem lineageSystem = FindObjectOfType<LineageSystem>();
+        LineageSystem lineageSystem = FindFirstObjectByType<LineageSystem>();
         if (lineageSystem != null && generationText != null)
         {
-            generationText.text = "Generation: " + lineageSystem.GetCurrentGeneration();
+            generationText.text = "Generation: " + lineageSystem.GetCurrentGeneration() +
+                                  " / " + GameManager.Instance.GetMaxGenerations();
         }
 
         // Update trait icons
-        if (traitIconsContainer != null)
+        if (traitIconsContainer != null && lineageSystem != null)
         {
             // Clear existing icons
             foreach (Transform child in traitIconsContainer)
@@ -167,8 +206,23 @@ public class UIManager : MonoBehaviour
                     // If you have trait icons
                     if (trait.icon != null)
                         icon.sprite = trait.icon;
+
+                    // Add tooltip with trait name and description
+                    TooltipTrigger tooltipTrigger = icon.gameObject.AddComponent<TooltipTrigger>();
+                    if (tooltipTrigger != null)
+                    {
+                        tooltipTrigger.tooltipText = trait.displayName + ": " + trait.description;
+                    }
                 }
             }
         }
     }
+}
+
+// Simple tooltip trigger component - you'll need to implement a tooltip system
+public class TooltipTrigger : MonoBehaviour
+{
+    public string tooltipText;
+
+    // Add event system hooks if you want to implement tooltips later
 }

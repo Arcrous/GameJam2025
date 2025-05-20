@@ -40,6 +40,17 @@ public class TraitManager : MonoBehaviour
 {
     public static TraitManager Instance;
 
+    [SerializeField] Sprite fireIcon;
+    [SerializeField] Sprite iceIcon;
+    [SerializeField] Sprite lightningIcon;
+    [SerializeField] Sprite earthIcon;
+    [SerializeField] Sprite windIcon;
+    [SerializeField] Sprite waterIcon;
+    [SerializeField] Sprite lightIcon;
+    [SerializeField] Sprite shadowIcon;
+    [SerializeField] Sprite poisonIcon;
+    [SerializeField] Sprite steelIcon;
+
     [SerializeField]
     private List<Trait> allTraits = new List<Trait>();
 
@@ -63,6 +74,7 @@ public class TraitManager : MonoBehaviour
             // Fire trait
             Trait fireTrait = new Trait();
             fireTrait.type = TraitType.Fire;
+            fireTrait.icon = fireIcon;
             fireTrait.displayName = "Fire";
             fireTrait.description = "Burns enemies over time";
             fireTrait.displayColor = new Color(1f, 0.4f, 0.1f);
@@ -72,6 +84,7 @@ public class TraitManager : MonoBehaviour
             // Ice trait
             Trait iceTrait = new Trait();
             iceTrait.type = TraitType.Ice;
+            iceTrait.icon = iceIcon;
             iceTrait.displayName = "Ice";
             iceTrait.description = "Slows enemy attacks";
             iceTrait.displayColor = new Color(0.7f, 0.9f, 1f);
@@ -80,6 +93,7 @@ public class TraitManager : MonoBehaviour
             // Lightning trait
             Trait lightningTrait = new Trait();
             lightningTrait.type = TraitType.Lightning;
+            lightningTrait.icon = lightningIcon;
             lightningTrait.displayName = "Lightning";
             lightningTrait.description = "Has a chance to stun";
             lightningTrait.displayColor = new Color(1f, 1f, 0.4f);
@@ -90,6 +104,7 @@ public class TraitManager : MonoBehaviour
             // Earth
             Trait earthTrait = new Trait();
             earthTrait.type = TraitType.Earth;
+            earthTrait.icon = earthIcon;
             earthTrait.displayName = "Earth";
             earthTrait.description = "Increases damage resistance";
             earthTrait.displayColor = new Color(0.6f, 0.4f, 0.2f);
@@ -98,6 +113,7 @@ public class TraitManager : MonoBehaviour
             // Wind
             Trait windTrait = new Trait();
             windTrait.type = TraitType.Wind;
+            windTrait.icon = windIcon;
             windTrait.displayName = "Wind";
             windTrait.description = "Improves dodge timing";
             windTrait.displayColor = new Color(0.8f, 1f, 0.8f);
@@ -107,6 +123,7 @@ public class TraitManager : MonoBehaviour
             // Water
             Trait waterTrait = new Trait();
             waterTrait.type = TraitType.Water;
+            waterTrait.icon = waterIcon;
             waterTrait.displayName = "Water";
             waterTrait.description = "Recovers health over time";
             waterTrait.displayColor = new Color(0.2f, 0.6f, 1f);
@@ -115,6 +132,7 @@ public class TraitManager : MonoBehaviour
             // Light
             Trait lightTrait = new Trait();
             lightTrait.type = TraitType.Light;
+            lightTrait.icon = lightIcon;
             lightTrait.displayName = "Light";
             lightTrait.description = "Increases critical hit chance";
             lightTrait.displayColor = new Color(1f, 1f, 0.8f);
@@ -124,6 +142,7 @@ public class TraitManager : MonoBehaviour
             // Shadow
             Trait shadowTrait = new Trait();
             shadowTrait.type = TraitType.Shadow;
+            shadowTrait.icon = shadowIcon;
             shadowTrait.displayName = "Shadow";
             shadowTrait.description = "Has a chance to dodge automatically";
             shadowTrait.displayColor = new Color(0.4f, 0.4f, 0.5f);
@@ -132,6 +151,7 @@ public class TraitManager : MonoBehaviour
             // Poison
             Trait poisonTrait = new Trait();
             poisonTrait.type = TraitType.Poison;
+            poisonTrait.icon = poisonIcon;
             poisonTrait.displayName = "Poison";
             poisonTrait.description = "Applies strong damage over time";
             poisonTrait.displayColor = new Color(0.6f, 1f, 0.4f);
@@ -141,6 +161,7 @@ public class TraitManager : MonoBehaviour
             // Steel
             Trait steelTrait = new Trait();
             steelTrait.type = TraitType.Steel;
+            steelTrait.icon = steelIcon;
             steelTrait.displayName = "Steel";
             steelTrait.description = "Increases base damage";
             steelTrait.displayColor = new Color(0.7f, 0.7f, 0.7f);

@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI generationText;
     public Transform traitIconsContainer;
     public Image traitIconPrefab;
+    public Image borderIconPrefab;
+
 
     [Header("Combat UI")]
     public Button attackButton;
@@ -147,6 +149,7 @@ public class UIManager : MonoBehaviour
                 TextMeshProUGUI buttonText = traitButton.GetComponentInChildren<TextMeshProUGUI>();
                 if (buttonText != null)
                 {
+                    traitButton.GetComponent<Image>().sprite = trait.icon;
                     buttonText.text = trait.displayName;
                     buttonText.color = trait.displayColor;
                 }
@@ -247,14 +250,16 @@ public class UIManager : MonoBehaviour
                 if (trait != null)
                 {
                     Image icon = Instantiate(traitIconPrefab, traitIconsContainer);
-                    icon.color = trait.displayColor;
+                    
+                    Image border = Instantiate(borderIconPrefab, icon.transform);
+                    border.color = trait.displayColor;
 
                     // If you have trait icons
                     if (trait.icon != null)
                         icon.sprite = trait.icon;
 
                     // Add tooltip with trait name and description
-                    TooltipTrigger tooltipTrigger = icon.gameObject.AddComponent<TooltipTrigger>();
+                    TooltipTrigger tooltipTrigger = border.gameObject.AddComponent<TooltipTrigger>();
                     if (tooltipTrigger != null)
                     {
                         tooltipTrigger.tooltipText = trait.displayName + ": " + trait.description;

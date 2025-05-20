@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("References")]
     public GameObject slashEffect;
+    public GameObject dodgeEffect;
     public Transform attackPoint;
     
     private Animator animator;
@@ -53,13 +54,16 @@ public class PlayerController : MonoBehaviour
         isDodging = true;
         canDodge = false;
         
+        // Show dodge/slash effect
+        if (dodgeEffect != null && attackPoint != null)
+        {
+           GameObject dodgeVFX = Instantiate(dodgeEffect, this.transform.position, this.transform.rotation);
+            Destroy(dodgeVFX, 0.568f);
+        }
+
         // Move sprite down for dodge (simple implementation)
         Vector3 originalPosition = transform.position;
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-        
-        // Show dodge/slash effect
-        if (slashEffect != null && attackPoint != null)
-            Instantiate(slashEffect, attackPoint.position, attackPoint.rotation);
         
         yield return new WaitForSeconds(0.2f);
         

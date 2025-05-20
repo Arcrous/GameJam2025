@@ -126,9 +126,20 @@ MonoBehaviour:
   maxHealth: 100
   attackPower: 10
   dodgeCooldown: 0.5
+  dodgeDistance: 1.5
+  dodgeDuration: 0.25
+  dodgeInvulnerabilityTime: 0.5
+  dodgeLeftEffect: {fileID: 796031269007609945, guid: f270f55b4b9618a45a29ad1a53f2d7c1, type: 3}
+  dodgeRightEffect: {fileID: 796031269007609945, guid: 321c06c0413be71448cab3606c201ca2, type: 3}
+  dodgeSound: {fileID: 0}
+  hitSound: {fileID: 0}
+  dodgeLeftKey: 97
+  dodgeRightKey: 100
   slashEffect: {fileID: 7862141871414164757, guid: 98f51a29c1b18d14896416ea055299a5, type: 3}
-  dodgeEffect: {fileID: 796031269007609945, guid: f270f55b4b9618a45a29ad1a53f2d7c1, type: 3}
   attackPoint: {fileID: 5928832980410502296}
+  attackSound: {fileID: 0}
+  flashMaterial: {fileID: 0}
+  flashDuration: 0.1
 --- !u!114 &5105340993101760010
 MonoBehaviour:
   m_ObjectHideFlags: 0

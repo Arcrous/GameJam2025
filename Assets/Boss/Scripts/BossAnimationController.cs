@@ -7,7 +7,7 @@ using UnityEngine;
 public class BossAnimationController : MonoBehaviour
 {
     [Header("Animation Settings")]
-    [SerializeField] private float attackAnimationDuration = 0.5f;
+    [SerializeField] private float attackAnimationDuration = 1f;
     [SerializeField] private float specialAttackAnimationDuration = 0.8f;
     [SerializeField] private float deathAnimationDuration = 1.5f;
     
@@ -16,7 +16,13 @@ public class BossAnimationController : MonoBehaviour
     [SerializeField] private GameObject rightSwipeEffect;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject specialAttackEffect;
-    
+    [SerializeField] private GameObject lightningStrikePrefab;
+    [SerializeField] private float lightningLifetime = 0.6f; // match animation length
+    [SerializeField] private GameObject warningFlashPrefab;
+    [SerializeField] private Transform leftFlashPoint;
+    [SerializeField] private Transform rightFlashPoint;
+    [SerializeField] private float warningFlashDuration = .1f;
+
     [Header("Spawn Points")]
     [SerializeField] private Transform leftSwipeSpawnPoint;
     [SerializeField] private Transform rightSwipeSpawnPoint;
@@ -197,7 +203,9 @@ public class BossAnimationController : MonoBehaviour
         
         // Play animation
         PlayAnimation(LEFT_SWIPE);
-        
+        yield return new WaitForSeconds(1f);
+        SpawnLightningInQuadrant(false);
+
         // Wait for animation to reach the hit frame
         yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
         
@@ -224,7 +232,6 @@ public class BossAnimationController : MonoBehaviour
         yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
         
         // Return to idle
-        PlayAnimation(IDLE);
         isPlayingAnimation = false;
     }
     
@@ -234,10 +241,11 @@ public class BossAnimationController : MonoBehaviour
     private IEnumerator PlayRightSwipeAttack()
     {
         isPlayingAnimation = true;
-        
         // Play animation
         PlayAnimation(RIGHT_SWIPE);
-        
+        yield return new WaitForSeconds(1f);
+        SpawnLightningInQuadrant(true);
+
         // Wait for animation to reach the hit frame
         yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
         
@@ -264,7 +272,6 @@ public class BossAnimationController : MonoBehaviour
         yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
         
         // Return to idle
-        PlayAnimation(IDLE);
         isPlayingAnimation = false;
     }
     
@@ -311,6 +318,9 @@ public class BossAnimationController : MonoBehaviour
         
         // Play animation
         PlayAnimation(SPECIAL_ATTACK);
+	yield return new WaitForSeconds(1f);
+        SpawnLightningInQuadrant(true);
+	SpawnLightningInQuadrant(false);
         
         // Wait for animation to reach the climax
         yield return new WaitForSeconds(specialAttackAnimationDuration * 0.6f);
@@ -457,4 +467,55 @@ public class BossAnimationController : MonoBehaviour
             }
         }
     }
+
+    private void SpawnLightningInQuadrant(bool isRightSide)
+    {
+        Camera mainCam = Camera.main;
+        if (mainCam == null) return;
+
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        // Define bounds of the quadrant in screen space
+        float minX = isRightSide ? screenWidth / 2f : 0f;
+        float maxX = isRightSide ? screenWidth : screenWidth / 2f;
+        float minY = 0f;
+        float maxY = screenHeight / 2f;
+
+        int columns = 5;
+        int rows = 3;
+
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                float screenX = Mathf.Lerp(minX, maxX, (x + 0.5f) / columns);
+                float screenY = Mathf.Lerp(minY, maxY, (y + 0.5f) / rows);
+                Vector3 screenPos = new Vector3(screenX, screenY, 10f); // z = 10 for camera depth
+
+                Vector3 worldPos = mainCam.ScreenToWorldPoint(screenPos);
+
+                GameObject lightning = Instantiate(lightningStrikePrefab, worldPos, Quaternion.identity);
+                Destroy(lightning, lightningLifetime);
+            }
+        }
+    }
+
+   private void SpawnLeftFlash()
+	{
+if (warningFlashPrefab != null && leftFlashPoint != null)
+    {
+        GameObject flash = Instantiate(warningFlashPrefab, leftFlashPoint.position, Quaternion.identity);
+        Destroy(flash, warningFlashDuration);
+    }
+}
+
+private void SpawnRightFlash()
+	{
+if (warningFlashPrefab != null && rightFlashPoint != null)
+    {
+        GameObject flash = Instantiate(warningFlashPrefab, rightFlashPoint.position, Quaternion.identity);
+        Destroy(flash, warningFlashDuration);
+    }
+}
 }

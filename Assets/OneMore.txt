@@ -2,13 +2,17 @@ Inheritence-based, turn-based + QTE game inside of Unity 2D
 
 [Player]
 The player can attack on their turn.
-When it's the boss's turn, the player has the option to dodge the attack (if they successfully dodge, they can counter attack maybe?)
+During the boss's turn, the player has the option to dodge the attack.
+Each time the player successfully dodge, their dodgeCount will +1 (need a way to track if the player did actually dodge the attack).
+Once the boss turns end, if the player has dodgeCount of >0, the player will automatically launch a counter attack (attackPower * dodgeCount).
 
 [Boss]
 Boss have X amount of weaknesses (minimum of 3, max of 6)
+Out of the selected weaknesses, the boss will have 1 weakness that gives HUGE multiplier called "The Only One".
 Boss can attack on their turn 
 Boss receive more damage if the player has a trait that match it weakness
-Boss have a display under their health bar of what trait is their weakness
+Boss have a display under their health bar of what trait is their weakness (traits will initially be displayed as ?)
+If the player has a trait that match the boss's weakness, the player will be able to see the weakness of the boss (the ? will be replaced with the trait name)
 
 [Game loop]
 Player will control Hero

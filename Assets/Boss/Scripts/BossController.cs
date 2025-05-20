@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static BossAnimationController;
 
 public class BossController : MonoBehaviour
 {
@@ -48,35 +50,49 @@ public class BossController : MonoBehaviour
         // Get player reference
         player = FindFirstObjectByType<PlayerController>();
         
-        // Get weaknesses from GameManager
-        weaknesses = GameManager.Instance.GetBossWeaknesses();
-        
         // Initialize health
         currentHealth = maxHealth;
-        
+    }
+
+    public void CreateWeakness()
+    {
+        // Get weaknesses from GameManager
+        weaknesses = GameManager.Instance.GetBossWeaknesses();
         // Setup weakness UI
         SetupWeaknessIcons();
     }
     
     private void SetupWeaknessIcons()
     {
+        Debug.Log("Setting up weakness icons");
         if (weaknessIconsContainer != null && weaknessIconPrefab != null)
         {
+            Debug.Log("Weakness icons container found");
             // Clear any existing icons
             foreach (Transform child in weaknessIconsContainer)
             {
+                Debug.Log("Destroying existing icon");
                 Destroy(child.gameObject);
             }
-            
+
+            Debug.Log(weaknesses[0]);
+
             // Create icons for each weakness
             foreach (TraitType weakness in weaknesses)
             {
+                Debug.Log("Creating icon for weakness: " + weakness);
                 Trait trait = TraitManager.Instance.GetTraitByType(weakness);
                 if (trait != null)
                 {
+                    Debug.Log("Trait found: " + trait.displayName);
                     Image icon = Instantiate(weaknessIconPrefab, weaknessIconsContainer);
-                    icon.color = trait.displayColor;
-                    
+                    TextMeshProUGUI weaknessHint = icon.GetComponentInChildren<TextMeshProUGUI>();
+                    if (weaknessHint != null)
+                    {
+                        // Set the hint text to the trait name
+                        weaknessHint.color = trait.displayColor;
+                    }
+
                     // If you have trait icons
                     if (trait.icon != null)
                         icon.sprite = trait.icon;
@@ -94,7 +110,16 @@ public class BossController : MonoBehaviour
             StartCoroutine(ExecuteAttack());
         }
     }
-    
+
+    public AttackDirection GetCurrentAttackDirection()
+    {
+        if (animationController != null)
+        {
+            return animationController.GetCurrentAttackDirection();
+        }
+        return AttackDirection.None;
+    }
+
     private IEnumerator ExecuteAttack()
     {
         Debug.Log("Boss is attacking");
@@ -103,7 +128,9 @@ public class BossController : MonoBehaviour
         // Signal attack is coming to allow player to dodge
         if (attackIndicator != null)
             attackIndicator.SetActive(true);
-        
+
+        GetCurrentAttackDirection();
+
         // Wait for reaction time window
         yield return new WaitForSeconds(attackInterval);
         

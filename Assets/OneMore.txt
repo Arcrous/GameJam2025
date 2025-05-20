@@ -9,7 +9,13 @@ Once the boss turns end, if the player has dodgeCount of >0, the player will aut
 [Boss]
 Boss have X amount of weaknesses (minimum of 3, max of 6)
 Out of the selected weaknesses, the boss will have 1 weakness that gives HUGE multiplier called "The Only One".
-Boss can attack on their turn 
+
+Boss can attack on their turn
+Based on animation asset, boss will have 3 possible patterns of attack.Example: One of the animation is a right arm swing, at a certain frame an animation event will SetActive(true) a trigger collider that covers 50% of the screen, depending on which arm is swung. 
+The collider should automatically detect if the player is inside the collider and trigger a damage event. 
+The collider should be set to false after 0.5 seconds (or whatever time it takes for the animation to finish).
+Need some sort of sensor here to track if the player "dodged" this attack.
+
 Boss receive more damage if the player has a trait that match it weakness
 Boss have a display under their health bar of what trait is their weakness (traits will initially be displayed as ?)
 If the player has a trait that match the boss's weakness, the player will be able to see the weakness of the boss (the ? will be replaced with the trait name)

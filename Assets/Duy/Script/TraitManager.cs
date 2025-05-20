@@ -100,7 +100,6 @@ public class TraitManager : MonoBehaviour
             lightningTrait.canStun = true;
             allTraits.Add(lightningTrait);
 
-            // Add the other 7 traits with their properties...
             // Earth
             Trait earthTrait = new Trait();
             earthTrait.type = TraitType.Earth;

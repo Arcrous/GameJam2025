@@ -31,8 +31,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] GameObject slashEffect;
+    [SerializeField] GameObject counterEffect;
     [SerializeField] Transform attackPoint;
     [SerializeField] private AudioClip attackSound;
+    [SerializeField] TMPro.TextMeshProUGUI dodgeCounterText;
 
     [Header("Visual Feedback")]
     [SerializeField] private Material flashMaterial;
@@ -56,6 +58,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
+
+        dodgeCounterText = GameObject.Find("DodgeCounterText").GetComponent<TMPro.TextMeshProUGUI>();
 
         // Create audio source if it doesn't exist
         if (audioSource == null)
@@ -124,6 +128,42 @@ public class PlayerController : MonoBehaviour
         isDodgeMoving = true;
         isInvulnerable = true;
         dodgeTimer = 0f;
+
+        // Get current boss attack direction
+        BossAnimationController bossAnimController = FindFirstObjectByType<BossAnimationController>();
+        BossAnimationController.AttackDirection attackDir = BossAnimationController.AttackDirection.None;
+
+        if (bossAnimController != null)
+        {
+            attackDir = bossAnimController.GetCurrentAttackDirection();
+        }
+
+        // Check if this is a successful dodge (dodging in the correct direction)
+        bool successfulDodge = false;
+
+        if (attackDir == BossAnimationController.AttackDirection.Left && dodgeLeft)
+        {
+            // Boss attacking from right, player dodged left = success
+            successfulDodge = true;
+        }
+        else if (attackDir == BossAnimationController.AttackDirection.Right && !dodgeLeft)
+        {
+            // Boss attacking from left, player dodged right = success
+            successfulDodge = true;
+        }
+        else if (attackDir == BossAnimationController.AttackDirection.Both)
+        {
+            // Both directions are valid for dodge (like projectile attack)
+            successfulDodge = true;
+        }
+
+        // Increment dodge counter only if successful
+        if (successfulDodge)
+        {
+            dodgeCount++;
+            Debug.Log("Successful dodge! Dodge count: " + dodgeCount);
+            UpdateDodgeCounterUI();
+        }
 
         // Set start and target positions
         startPosition = transform.position;
@@ -235,23 +275,6 @@ public class PlayerController : MonoBehaviour
             Destroy(effect, 0.5f);
         }
 
-        // Deal damage to boss
-        BossController boss = FindFirstObjectByType<BossController>();
-        if (boss != null)
-        {
-            // Get player traits
-            PlayerTraitSystem traitSystem = GetComponent<PlayerTraitSystem>();
-            List<TraitType> playerTraits = new List<TraitType>();
-
-            if (traitSystem != null)
-            {
-                playerTraits = traitSystem.GetPlayerTraits();
-            }
-
-            // Apply attack damage
-            boss.TakeDamage(attackPower, playerTraits);
-        }
-
         // Play attack sound
         if (audioSource != null && attackSound != null)
         {
@@ -271,6 +294,13 @@ public class PlayerController : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("CounterAttack");
+        }
+
+        // Instantiate slash effect
+        if (counterEffect != null && attackPoint != null)
+        {
+            GameObject effect = Instantiate(counterEffect, attackPoint.position, attackPoint.rotation);
+            Destroy(effect, 0.5f);
         }
 
         // Deal damage to boss
@@ -377,6 +407,19 @@ public class PlayerController : MonoBehaviour
     public void ResetDodgeCount()
     {
         dodgeCount = 0;
+        UpdateDodgeCounterUI();
+    }
+
+    void UpdateDodgeCounterUI()
+    {
+        if (dodgeCounterText != null && dodgeCount > 0)
+        {
+            dodgeCounterText.text = "x" + dodgeCount;
+        }
+        else if (dodgeCounterText != null && dodgeCount <= 0)
+        {
+            dodgeCounterText.text = "";
+        }
     }
 
     // For animation events

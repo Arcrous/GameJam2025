@@ -86,9 +86,9 @@ public class GameManager : MonoBehaviour
         // If we have a boss controller, update its weaknesses
         if (bossController != null)
         {
-            // There's no direct setter for weaknesses, would need to modify BossController
-            // For now, we just generate them and they're fetched when needed
+            bossController.CreateWeakness();
         }
+
     }
 
     public void TraitSelected(TraitType selectedTrait)

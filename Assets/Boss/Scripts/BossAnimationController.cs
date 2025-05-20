@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BossController))]
 public class BossAnimationController : MonoBehaviour
 {
+
     [Header("Animation Settings")]
     [SerializeField] private float attackAnimationDuration = 1f;
     [SerializeField] private float specialAttackAnimationDuration = 0.8f;
@@ -47,7 +49,15 @@ public class BossAnimationController : MonoBehaviour
     private bool isPlayingAnimation = false;
     private TurnManager turnManager;
     private PlayerController playerController;
-    
+    public enum AttackDirection
+    {
+        None,
+        Left,
+        Right,
+        Both
+    }
+    private AttackDirection currentAttackDirection = AttackDirection.None;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -200,7 +210,8 @@ public class BossAnimationController : MonoBehaviour
     private IEnumerator PlayLeftSwipeAttack()
     {
         isPlayingAnimation = true;
-        
+        currentAttackDirection = AttackDirection.Right;
+
         // Play animation
         PlayAnimation(LEFT_SWIPE);
         yield return new WaitForSeconds(1f);
@@ -230,7 +241,9 @@ public class BossAnimationController : MonoBehaviour
         
         // Wait for animation to complete
         yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
-        
+
+        currentAttackDirection = AttackDirection.None;
+
         // Return to idle
         isPlayingAnimation = false;
     }
@@ -241,6 +254,8 @@ public class BossAnimationController : MonoBehaviour
     private IEnumerator PlayRightSwipeAttack()
     {
         isPlayingAnimation = true;
+        currentAttackDirection = AttackDirection.Left;
+
         // Play animation
         PlayAnimation(RIGHT_SWIPE);
         yield return new WaitForSeconds(1f);
@@ -270,7 +285,9 @@ public class BossAnimationController : MonoBehaviour
         
         // Wait for animation to complete
         yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
-        
+
+        currentAttackDirection = AttackDirection.None;
+
         // Return to idle
         isPlayingAnimation = false;
     }
@@ -281,7 +298,8 @@ public class BossAnimationController : MonoBehaviour
     private IEnumerator PlayProjectileAttack()
     {
         isPlayingAnimation = true;
-        
+        currentAttackDirection = AttackDirection.Both;
+
         // Play animation
         PlayAnimation(ATTACK);
         
@@ -303,7 +321,9 @@ public class BossAnimationController : MonoBehaviour
         
         // Wait for animation to complete
         yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
-        
+
+        currentAttackDirection = AttackDirection.None;
+
         // Return to idle
         PlayAnimation(IDLE);
         isPlayingAnimation = false;
@@ -315,7 +335,8 @@ public class BossAnimationController : MonoBehaviour
     public IEnumerator PlaySpecialAttackAnimation()
     {
         isPlayingAnimation = true;
-        
+        currentAttackDirection = AttackDirection.Both;
+
         // Play animation
         PlayAnimation(SPECIAL_ATTACK);
 	yield return new WaitForSeconds(1f);
@@ -346,7 +367,9 @@ public class BossAnimationController : MonoBehaviour
         
         // Wait for animation to complete
         yield return new WaitForSeconds(specialAttackAnimationDuration * 0.4f);
-        
+
+        currentAttackDirection = AttackDirection.None;
+
         // Return to idle
         PlayAnimation(IDLE);
         isPlayingAnimation = false;
@@ -362,6 +385,10 @@ public class BossAnimationController : MonoBehaviour
         {
             // Check if player is in this cell
             float distance = Vector3.Distance(player.transform.position, cellPosition);
+
+            // Only deal damage if:
+            // 1. Player is in the cell AND
+            // 2. Player is not dodging OR is dodging but in the wrong direction
             if (distance <= cellRadius && !player.IsDodging())
             {
                 player.TakeDamage(bossController.attackPower);
@@ -414,7 +441,12 @@ public class BossAnimationController : MonoBehaviour
     {
         // Special attack now handled by grid system in PlaySpecialAttackAnimation
     }
-    
+
+    public AttackDirection GetCurrentAttackDirection()
+    {
+        return currentAttackDirection;
+    }
+
     /// <summary>
     /// Visualize the grid in the editor (for debugging)
     /// </summary>

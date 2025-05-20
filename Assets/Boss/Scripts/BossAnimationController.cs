@@ -18,6 +18,10 @@ public class BossAnimationController : MonoBehaviour
     [SerializeField] private GameObject specialAttackEffect;
     [SerializeField] private GameObject lightningStrikePrefab;
     [SerializeField] private float lightningLifetime = 0.6f; // match animation length
+    [SerializeField] private GameObject warningFlashPrefab;
+    [SerializeField] private Transform leftFlashPoint;
+    [SerializeField] private Transform rightFlashPoint;
+    [SerializeField] private float warningFlashDuration = .1f;
 
     [Header("Spawn Points")]
     [SerializeField] private Transform leftSwipeSpawnPoint;
@@ -237,7 +241,6 @@ public class BossAnimationController : MonoBehaviour
     private IEnumerator PlayRightSwipeAttack()
     {
         isPlayingAnimation = true;
-        
         // Play animation
         PlayAnimation(RIGHT_SWIPE);
         yield return new WaitForSeconds(1f);
@@ -315,6 +318,9 @@ public class BossAnimationController : MonoBehaviour
         
         // Play animation
         PlayAnimation(SPECIAL_ATTACK);
+	yield return new WaitForSeconds(1f);
+        SpawnLightningInQuadrant(true);
+	SpawnLightningInQuadrant(false);
         
         // Wait for animation to reach the climax
         yield return new WaitForSeconds(specialAttackAnimationDuration * 0.6f);
@@ -494,4 +500,22 @@ public class BossAnimationController : MonoBehaviour
             }
         }
     }
+
+   private void SpawnLeftFlash()
+	{
+if (warningFlashPrefab != null && leftFlashPoint != null)
+    {
+        GameObject flash = Instantiate(warningFlashPrefab, leftFlashPoint.position, Quaternion.identity);
+        Destroy(flash, warningFlashDuration);
+    }
+}
+
+private void SpawnRightFlash()
+	{
+if (warningFlashPrefab != null && rightFlashPoint != null)
+    {
+        GameObject flash = Instantiate(warningFlashPrefab, rightFlashPoint.position, Quaternion.identity);
+        Destroy(flash, warningFlashDuration);
+    }
+}
 }

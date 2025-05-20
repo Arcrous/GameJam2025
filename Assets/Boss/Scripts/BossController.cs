@@ -121,6 +121,7 @@ public class BossController : MonoBehaviour
             {
                 yield return null;
             }
+            turnManager.EndEnemyTurn();
         }
         else
         {

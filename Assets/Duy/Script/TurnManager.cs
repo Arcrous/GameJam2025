@@ -99,6 +99,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndEnemyTurn()
     {
+        Debug.Log("Enemy turn is ending");
         if (currentState != TurnState.EnemyTurn) return;
 
         StartCoroutine(DelayedTurnChange(TurnState.PlayerTurn));

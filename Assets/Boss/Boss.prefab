@@ -202,6 +202,8 @@ MonoBehaviour:
   rightSwipeEffect: {fileID: 0}
   projectilePrefab: {fileID: 0}
   specialAttackEffect: {fileID: 0}
+  lightningStrikePrefab: {fileID: 6277059408603457842, guid: d70fb13211d51054984f8c1927b7b8a6, type: 3}
+  lightningLifetime: 0.6
   leftSwipeSpawnPoint: {fileID: 0}
   rightSwipeSpawnPoint: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
@@ -209,7 +211,7 @@ MonoBehaviour:
   gridSpacing: 1
   gridCenter: {fileID: 0}
   visualizeGrid: 1
-  attackPattern: 00000000010000000200000000000000
+  attackPattern: 02000000010000000200000001000000
 --- !u!70 &1541291045649112260
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

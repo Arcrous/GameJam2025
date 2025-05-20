@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5785865963613585275}
   - component: {fileID: 4350820514581095430}
   - component: {fileID: 6476951224735507122}
+  - component: {fileID: -3315753282125459643}
   m_Layer: 5
   m_Name: TraitIcon
   m_TagString: Untagged
@@ -28,7 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 38b46c16110591a49bd7863bfddc4314, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -75,3 +76,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!210 &-3315753282125459643
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938849039616822571}
+  m_Enabled: 1
+  m_SortingLayerID: -712092189
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_SortAtRoot: 0

@@ -19,6 +19,7 @@ public class TurnManager : MonoBehaviour
     private TurnState currentState;
     private PlayerController player;
     private BossController boss;
+    private bool processingTurn = false;
 
     public delegate void TurnChangeDelegate(TurnState newState);
     public event TurnChangeDelegate OnTurnChanged;
@@ -52,18 +53,19 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(DelayedTurnChange(TurnState.EnemyTurn));
     }
 
-    public void TriggerDodge()
+    private IEnumerator ProcessCounterAttack()
     {
-        if (currentState != TurnState.EnemyTurn) return;
+        processingTurn = true;
 
-        SetTurnState(TurnState.Dodging);
+        // Small delay for visual clarity
+        yield return new WaitForSeconds(0.5f);
 
-        // Player attempts to dodge
-        if (player != null)
-            player.TryDodge();
+        Debug.Log("Processing counter attack from dodges: " + player.GetDodgeCount());
 
-        // Back to player turn if successful dodge
-        StartCoroutine(DelayedTurnChange(TurnState.PlayerTurn));
+        // Execute counter attack
+        player.CounterAttack();
+
+        processingTurn = false;
     }
 
     public void EndBattle(bool playerWon)
@@ -76,12 +78,6 @@ public class TurnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(turnDelay);
         SetTurnState(nextState);
-
-        // Handle enemy turn automatically
-        if (nextState == TurnState.EnemyTurn && boss != null)
-        {
-            //boss.TakeTurn();
-        }
     }
 
     private void SetTurnState(TurnState newState)

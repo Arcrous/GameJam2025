@@ -8,112 +8,386 @@ public class PlayerController : MonoBehaviour
     public int currentHealth;
     public int maxHealth = 100;
     public int attackPower = 10;
-    
+
     [Header("Combat")]
     public float dodgeCooldown = 0.5f;
     private bool canDodge = true;
     private bool isDodging = false;
-    
+
+    [Header("Dodge QTE")]
+    [SerializeField] private float dodgeDistance = 1.5f; // How far to dodge
+    [SerializeField] private float dodgeDuration = 0.25f; // How long the dodge movement takes
+    [SerializeField] private float dodgeInvulnerabilityTime = 0.5f; // How long player is invulnerable during dodge
+    [SerializeField] private GameObject dodgeLeftEffect;
+    [SerializeField] private GameObject dodgeRightEffect;
+    [SerializeField] private AudioClip dodgeSound;
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private KeyCode dodgeLeftKey = KeyCode.A;
+    [SerializeField] private KeyCode dodgeRightKey = KeyCode.D;
+
+    [Header("Movement Boundaries")]
+    [SerializeField] private float minX = -5f; // Left boundary
+    [SerializeField] private float maxX = 5f;  // Right boundary
+
     [Header("References")]
-    public GameObject slashEffect;
-    public Transform attackPoint;
-    
+    [SerializeField] GameObject slashEffect;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] private AudioClip attackSound;
+
+    [Header("Visual Feedback")]
+    [SerializeField] private Material flashMaterial;
+    [SerializeField] private float flashDuration = 0.1f;
+
+    // Internal state
+    private float dodgeTimer = 0f;
+    private bool isDodgeMoving = false;
+    private bool isInvulnerable = false;
+    private Vector3 startPosition; // Original position before dodge
+    private Vector3 targetPosition; // Target position for dodge
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    
+    private Material originalMaterial;
+    private AudioSource audioSource;
+    private bool isReturning = false; // Flag to track return movement
+    private int dodgeCount = 0; // Track successful dodges for counter attacks
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+
+        // Create audio source if it doesn't exist
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
+
+        // Cache original material
+        if (spriteRenderer != null)
+        {
+            originalMaterial = spriteRenderer.material;
+        }
+    }
+
     void Start()
     {
         currentHealth = maxHealth;
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
     void Update()
     {
-        // Test controls
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (TurnManager.Instance.GetCurrentState() == TurnState.EnemyTurn && canDodge && !isDodging && !isDodgeMoving && !isReturning)
         {
-            Attack();
+            // Check for dodge input
+            if (Input.GetKeyDown(dodgeLeftKey))
+            {
+                DodgeInDirection(true); // True = left
+            }
+            else if (Input.GetKeyDown(dodgeRightKey))
+            {
+                DodgeInDirection(false); // False = right
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        // Handle dodge movement
+        if (isDodging && isDodgeMoving)
         {
-            TryDodge();
+            dodgeTimer += Time.deltaTime;
+            float t = Mathf.Clamp01(dodgeTimer / dodgeDuration);
+
+            // Use Lerp for smoother movement
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+
+            // End dodge movement
+            if (t >= 1.0f)
+            {
+                isDodgeMoving = false;
+                isInvulnerable = true; // Make sure player is invulnerable during dodge
+
+                // After dodge animation completes, return to original position after short delay
+                StartCoroutine(ReturnToPositionAfterDelay(0.2f));
+            }
+        }
+    }
+
+    // New function for QTE-based dodge
+    public void DodgeInDirection(bool dodgeLeft)
+    {
+        if (!canDodge || isDodging || isDodgeMoving || isReturning)
+            return;
+
+        // Start dodge sequence
+        isDodging = true;
+        canDodge = false;
+        isDodgeMoving = true;
+        isInvulnerable = true;
+        dodgeTimer = 0f;
+
+        // Set start and target positions
+        startPosition = transform.position;
+        float direction = dodgeLeft ? -1f : 1f;
+
+        // Calculate target position but constrain it within boundaries
+        Vector3 potentialTarget = startPosition + new Vector3(direction * dodgeDistance, 0, 0);
+        float clampedX = Mathf.Clamp(potentialTarget.x, minX, maxX);
+        targetPosition = new Vector3(clampedX, startPosition.y, startPosition.z);
+
+        // If the target position can't move the full distance, adjust dodge distance
+        if (potentialTarget.x != clampedX)
+        {
+            // Optional: Visual/audio feedback that dodge is limited
+            Debug.Log("Dodge limited by boundary");
         }
 
-        // Test player death (for development)
-        if (Input.GetKeyDown(KeyCode.K))
+        // Play dodge sound
+        if (audioSource != null && dodgeSound != null)
         {
-            TakeDamage(currentHealth);
+            audioSource.PlayOneShot(dodgeSound);
         }
+
+        if (dodgeLeft)
+        {
+            // Show dodge effect
+            if (dodgeLeftEffect != null)
+            {
+                GameObject dodgeVFX = Instantiate(dodgeLeftEffect, transform.position, transform.rotation);
+                Destroy(dodgeVFX, 0.61f);
+            }
+        }
+        else
+        {
+            // Show dodge effect
+            if (dodgeRightEffect != null)
+            {
+                GameObject dodgeVFX = Instantiate(dodgeRightEffect, transform.position, transform.rotation);
+                Destroy(dodgeVFX, 0.61f);
+            }
+        }
+
+        // Increment successful dodge counter
+        //dodgeCount++;
+
+        // Start the invulnerability
+        StartCoroutine(DodgeInvulnerabilityCoroutine());
+    }
+
+    private IEnumerator DodgeInvulnerabilityCoroutine()
+    {
+        // Wait for invulnerability duration
+        yield return new WaitForSeconds(dodgeInvulnerabilityTime);
+
+        // End invulnerability but keeping dodge state until return is complete
+        isInvulnerable = false;
+
+        // Wait for any return movement to complete before ending dodge state
+        yield return new WaitUntil(() => !isReturning);
+
+        // End dodge state
+        isDodging = false;
+
+        // Start cooldown - making sure we don't subtract time that was already spent in the dodge+return animations
+        yield return new WaitForSeconds(dodgeCooldown);
+        canDodge = true;
+    }
+
+    private IEnumerator ReturnToPositionAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Set returning flag
+        isReturning = true;
+
+        // Return to original position
+        float returnTimer = 0f;
+        Vector3 returnStart = transform.position;
+
+        while (returnTimer < dodgeDuration)
+        {
+            returnTimer += Time.deltaTime;
+            float t = Mathf.Clamp01(returnTimer / dodgeDuration);
+
+            // Use Lerp for smoother movement
+            transform.position = Vector3.Lerp(returnStart, startPosition, t);
+
+            yield return null;
+        }
+
+        transform.position = startPosition;
+        isReturning = false;
     }
 
     public void Attack()
     {
         Debug.Log("Player attacked!");
-        // Play attack animation or visual effect
-        if (animator != null)
-            animator.SetTrigger("Attack");
 
-        // Instantiate slash effect if available
+        // Play attack animation
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+
+        // Instantiate slash effect
         if (slashEffect != null && attackPoint != null)
         {
-            GameObject slashVFX = Instantiate(slashEffect, attackPoint.position, attackPoint.rotation);
-            Destroy(slashVFX, 0.4f);
+            GameObject effect = Instantiate(slashEffect, attackPoint.position, attackPoint.rotation);
+            Destroy(effect, 0.5f);
         }
-    }
-    
-    public void TryDodge()
-    {
-        if (canDodge && !isDodging)
+
+        // Deal damage to boss
+        BossController boss = FindFirstObjectByType<BossController>();
+        if (boss != null)
         {
-            StartCoroutine(DodgeCoroutine());
+            // Get player traits
+            PlayerTraitSystem traitSystem = GetComponent<PlayerTraitSystem>();
+            List<TraitType> playerTraits = new List<TraitType>();
+
+            if (traitSystem != null)
+            {
+                playerTraits = traitSystem.GetPlayerTraits();
+            }
+
+            // Apply attack damage
+            boss.TakeDamage(attackPower, playerTraits);
+        }
+
+        // Play attack sound
+        if (audioSource != null && attackSound != null)
+        {
+            audioSource.PlayOneShot(attackSound);
         }
     }
-    
-    private System.Collections.IEnumerator DodgeCoroutine()
+
+    public void CounterAttack()
     {
-        isDodging = true;
-        canDodge = false;
-        
-        // Move sprite down for dodge (simple implementation)
-        Vector3 originalPosition = transform.position;
-        transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-        
-        // Show dodge/slash effect
-        if (slashEffect != null && attackPoint != null)
-            Instantiate(slashEffect, attackPoint.position, attackPoint.rotation);
-        
-        yield return new WaitForSeconds(0.2f);
-        
-        // Return to original position
-        transform.position = originalPosition;
-        isDodging = false;
-        
-        yield return new WaitForSeconds(dodgeCooldown);
-        canDodge = true;
+        if (dodgeCount <= 0) return;
+
+        // Calculate bonus damage based on dodge count
+        int bonusDamage = attackPower * dodgeCount;
+        Debug.Log($"Counter attacking with {bonusDamage} bonus damage!");
+
+        // Play special counter attack animation if available
+        if (animator != null)
+        {
+            animator.SetTrigger("CounterAttack");
+        }
+
+        // Deal damage to boss
+        BossController boss = FindFirstObjectByType<BossController>();
+        if (boss != null)
+        {
+            // Get player traits
+            PlayerTraitSystem traitSystem = GetComponent<PlayerTraitSystem>();
+            List<TraitType> playerTraits = new List<TraitType>();
+
+            if (traitSystem != null)
+            {
+                playerTraits = traitSystem.GetPlayerTraits();
+            }
+
+            // Apply counter attack damage
+            boss.TakeDamage(bonusDamage, playerTraits);
+        }
+
+        // Reset dodge counter
+        dodgeCount = 0;
     }
-    
+
     public bool IsDodging()
     {
-        return isDodging;
+        return isDodging || isInvulnerable;
     }
-    
+
     public void TakeDamage(int damage)
     {
-        if (!isDodging) // Only take damage if not dodging
+        // Skip damage if invulnerable
+        if (isInvulnerable)
         {
-            currentHealth -= damage;
-            if (currentHealth <= 0)
-            {
-                Die();
-            }
+            Debug.Log("Player dodged attack!");
+            return;
+        }
+
+        // Apply damage and check if player died
+        currentHealth -= damage;
+        Debug.Log($"Player took {damage} damage. Health: {currentHealth}/{maxHealth}");
+
+        // Play hit sound
+        if (audioSource != null && hitSound != null)
+        {
+            audioSource.PlayOneShot(hitSound);
+        }
+
+        // Visual feedback
+        StartCoroutine(FlashSprite());
+
+        // Check for death
+        if (currentHealth <= 0)
+        {
+            Die();
         }
     }
-    
+
+    // Visual feedback for taking damage
+    private IEnumerator FlashSprite()
+    {
+        if (spriteRenderer != null && flashMaterial != null)
+        {
+            // Switch to flash material
+            spriteRenderer.material = flashMaterial;
+
+            // Wait for flash duration
+            yield return new WaitForSeconds(flashDuration);
+
+            // Switch back to original material
+            spriteRenderer.material = originalMaterial;
+        }
+    }
+
     private void Die()
     {
         Debug.Log("Player died!");
+
+        // Play death animation
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
+
+        // Disable input
+        enabled = false;
+
         // Call GameManager to handle next generation
         FindFirstObjectByType<GameManager>().PlayerDied();
+    }
+
+    // Check if player can dodge currently
+    public bool CanDodge()
+    {
+        return canDodge && !isDodging && !isDodgeMoving && !isReturning;
+    }
+
+    // Get current dodge count
+    public int GetDodgeCount()
+    {
+        return dodgeCount;
+    }
+
+    // Reset dodge count (call after using counter attack)
+    public void ResetDodgeCount()
+    {
+        dodgeCount = 0;
+    }
+
+    // For animation events
+    public void OnAttackAnimationComplete()
+    {
+        // This gets called from animation event at the end of attack animation
+    }
+
+    // For animation events
+    public void OnDeathAnimationComplete()
+    {
+        // This gets called from animation event at the end of death animation
     }
 }

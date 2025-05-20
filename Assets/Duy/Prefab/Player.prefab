@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7307982909118763853}
   - {fileID: 5928832980410502296}
@@ -126,8 +126,20 @@ MonoBehaviour:
   maxHealth: 100
   attackPower: 10
   dodgeCooldown: 0.5
+  dodgeDistance: 1.5
+  dodgeDuration: 0.25
+  dodgeInvulnerabilityTime: 0.5
+  dodgeLeftEffect: {fileID: 796031269007609945, guid: f270f55b4b9618a45a29ad1a53f2d7c1, type: 3}
+  dodgeRightEffect: {fileID: 796031269007609945, guid: 321c06c0413be71448cab3606c201ca2, type: 3}
+  dodgeSound: {fileID: 0}
+  hitSound: {fileID: 0}
+  dodgeLeftKey: 97
+  dodgeRightKey: 100
   slashEffect: {fileID: 7862141871414164757, guid: 98f51a29c1b18d14896416ea055299a5, type: 3}
   attackPoint: {fileID: 5928832980410502296}
+  attackSound: {fileID: 0}
+  flashMaterial: {fileID: 0}
+  flashDuration: 0.1
 --- !u!114 &5105340993101760010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,8 +257,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 474054225
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 4334783836991956000, guid: f02f92662eab2f6419041404eedfc0ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

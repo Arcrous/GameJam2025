@@ -57,7 +57,7 @@ public class TurnManager : MonoBehaviour
     {
         processingTurn = true;
 
-        // Small delay for visual clarity
+        // Small delay for visual clarity before counter attack
         yield return new WaitForSeconds(0.5f);
 
         Debug.Log("Processing counter attack from dodges: " + player.GetDodgeCount());
@@ -65,7 +65,15 @@ public class TurnManager : MonoBehaviour
         // Execute counter attack
         player.CounterAttack();
 
+        // Wait for counter attack animation to finish
+        yield return new WaitForSeconds(1.0f);
+
+        // Reset dodge counter after using it
+        player.ResetDodgeCount();
+
+        // Now move to player turn
         processingTurn = false;
+        StartCoroutine(DelayedTurnChange(TurnState.PlayerTurn));
     }
 
     public void EndBattle(bool playerWon)
@@ -98,6 +106,15 @@ public class TurnManager : MonoBehaviour
         Debug.Log("Enemy turn is ending");
         if (currentState != TurnState.EnemyTurn) return;
 
-        StartCoroutine(DelayedTurnChange(TurnState.PlayerTurn));
+        // Check if player has accumulated dodge count for counter attack
+        if (player != null && player.GetDodgeCount() > 0)
+        {
+            Debug.Log("Player has dodge count: " + player.GetDodgeCount() + ". Triggering counter attack!");
+            StartCoroutine(ProcessCounterAttack());
+        }
+        else
+        {
+            StartCoroutine(DelayedTurnChange(TurnState.PlayerTurn));
+        }
     }
 }

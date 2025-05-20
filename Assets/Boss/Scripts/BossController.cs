@@ -314,7 +314,7 @@ public class BossController : MonoBehaviour
         isAttacking = false;
     }
     
-    // Called by attack button from player UI
+    /*// Called by attack button from player UI
     public void ReceivePlayerAttack()
     {
         if (player != null)
@@ -334,5 +334,5 @@ public class BossController : MonoBehaviour
                 TakeDamage(player.attackPower, new List<TraitType>());
             }
         }
-    }
+    }*/
 }

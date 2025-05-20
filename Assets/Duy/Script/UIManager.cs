@@ -50,18 +50,6 @@ public class UIManager : MonoBehaviour
         {
             player.Attack();
 
-            // Find the boss and apply damage
-            BossController boss = FindFirstObjectByType<BossController>();
-            if (boss == null)
-            {
-                Debug.Log("No boss found to attack!");
-            }
-            else
-            {
-                Debug.Log("Player attacked boss!");
-                boss.ReceivePlayerAttack();
-            }
-
             // End player turn
             TurnManager.Instance.EndPlayerTurn();
         }

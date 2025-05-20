@@ -278,6 +278,25 @@ public class PlayerController : MonoBehaviour
             Destroy(effect, 0.5f);
         }
 
+        // Find the boss and apply damage
+        BossController boss = FindFirstObjectByType<BossController>();
+        if (boss != null)
+        {
+            Debug.Log("No boss found to attack!");
+
+            // Get player traits
+            PlayerTraitSystem traitSystem = GetComponent<PlayerTraitSystem>();
+            List<TraitType> playerTraits = new List<TraitType>();
+
+            if (traitSystem != null)
+            {
+                playerTraits = traitSystem.GetPlayerTraits();
+            }
+
+            Debug.Log("Player attacked boss!");
+            boss.TakeDamage(attackPower, playerTraits);
+        }
+
         // Play attack sound
         if (audioSource != null && attackSound != null)
         {

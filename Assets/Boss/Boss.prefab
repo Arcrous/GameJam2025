@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 200
+  maxHealth: 690
   attackPower: 15
   attackInterval: 1.5
   numWeaknesses: 4

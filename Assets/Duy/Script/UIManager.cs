@@ -25,7 +25,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Combat UI")]
     public Button attackButton;
-    public Button dodgeButton;
 
     [Header("Debug")]
     [SerializeField] private bool showAllTraits = false; // Set to true to show all available traits
@@ -53,8 +52,13 @@ public class UIManager : MonoBehaviour
 
             // Find the boss and apply damage
             BossController boss = FindFirstObjectByType<BossController>();
-            if (boss != null)
+            if (boss == null)
             {
+                Debug.Log("No boss found to attack!");
+            }
+            else
+            {
+                Debug.Log("Player attacked boss!");
                 boss.ReceivePlayerAttack();
             }
 
@@ -67,9 +71,6 @@ public class UIManager : MonoBehaviour
     {
         if (attackButton != null)
             attackButton.interactable = (newState == TurnState.PlayerTurn);
-
-        if (dodgeButton != null)
-            dodgeButton.interactable = (newState == TurnState.EnemyTurn);
     }
 
     private void HideAllPanels()

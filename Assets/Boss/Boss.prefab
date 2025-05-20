@@ -134,7 +134,7 @@ MonoBehaviour:
   numWeaknesses: 4
   healthBar: {fileID: 0}
   weaknessIconsContainer: {fileID: 0}
-  weaknessIconPrefab: {fileID: 6476951224735507122, guid: 2370e3b71ff056e4891b85eac02d88c4, type: 3}
+  weaknessIconPrefab: {fileID: 7409872900286850088, guid: 314c8c33d6ba942408dfb6c5c1165764, type: 3}
   attackIndicator: {fileID: 0}
   attackEffect: {fileID: 0}
   damageParticle: {fileID: 0}
@@ -204,10 +204,14 @@ MonoBehaviour:
   specialAttackEffect: {fileID: 0}
   lightningStrikePrefab: {fileID: 6277059408603457842, guid: d70fb13211d51054984f8c1927b7b8a6, type: 3}
   lightningLifetime: 0.6
+  warningFlashPrefab: {fileID: 0}
+  leftFlashPoint: {fileID: 0}
+  rightFlashPoint: {fileID: 0}
+  warningFlashDuration: 0.1
   leftSwipeSpawnPoint: {fileID: 0}
   rightSwipeSpawnPoint: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
-  gridSize: {x: 3, y: 3}
+  gridSize: {x: 3, y: 5}
   gridSpacing: 1
   gridCenter: {fileID: 0}
   visualizeGrid: 1

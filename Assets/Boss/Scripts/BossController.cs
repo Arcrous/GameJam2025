@@ -32,7 +32,6 @@ public class BossController : MonoBehaviour
     private TurnManager turnManager;
     private Animator animator;
     private BossAnimationController animationController;
-    private float damageMultiplierFromWeakness = 1.5f;
     private bool isAttacking = false;
 
     private void Start()
@@ -185,6 +184,7 @@ public class BossController : MonoBehaviour
     
     public void TakeDamage(int baseDamage, List<TraitType> playerTraits)
     {
+        Debug.Log("Boss taking damage: " + baseDamage);
         float damageMultiplier = 1.0f;
         bool wasWeak = false;
         
@@ -322,12 +322,14 @@ public class BossController : MonoBehaviour
             PlayerTraitSystem traitSystem = player.GetComponent<PlayerTraitSystem>();
             if (traitSystem != null)
             {
+                Debug.Log("PlayerTraitSystem found on player. Calculating damage based on traits.");
                 // Get player traits and calculate damage
                 List<TraitType> playerTraits = traitSystem.GetPlayerTraits();
                 TakeDamage(player.attackPower, playerTraits);
             }
             else
             {
+                Debug.LogWarning("PlayerTraitSystem not found on player. Using base damage.");  
                 // Fallback if no trait system
                 TakeDamage(player.attackPower, new List<TraitType>());
             }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform attackPoint;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] TMPro.TextMeshProUGUI dodgeCounterText;
+    public Image healthBar;
 
     [Header("Visual Feedback")]
     [SerializeField] private Material flashMaterial;
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         dodgeCounterText = GameObject.Find("DodgeCounterText").GetComponent<TMPro.TextMeshProUGUI>();
+        healthBar = GameObject.Find("HealthFillPlayer").GetComponent<Image>();
 
         // Create audio source if it doesn't exist
         if (audioSource == null)
@@ -342,6 +345,9 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage;
         Debug.Log($"Player took {damage} damage. Health: {currentHealth}/{maxHealth}");
 
+        // Update health bar
+        UpdateHealthBar();
+
         // Play hit sound
         if (audioSource != null && hitSound != null)
         {
@@ -355,6 +361,14 @@ public class PlayerController : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = (float)currentHealth / maxHealth;
         }
     }
 

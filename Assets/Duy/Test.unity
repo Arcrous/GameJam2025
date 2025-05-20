@@ -1304,6 +1304,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870635150}
   m_CullTransparentMesh: 1
+--- !u!114 &874642560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4292488642282232583, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+  m_PrefabInstance: {fileID: 529097399}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0910c2d8223791c43943516bb63c9914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &938690952
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,7 +2424,7 @@ MonoBehaviour:
   bossWeaknessCount: 4
   playerPrefab: {fileID: 829239032913980474, guid: cc2f24767a3c92744a64a0fad6b58b0e, type: 3}
   playerSpawnPoint: {fileID: 1342726815}
-  bossController: {fileID: 0}
+  bossController: {fileID: 874642560}
 --- !u!4 &1711049066
 Transform:
   m_ObjectHideFlags: 0

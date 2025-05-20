@@ -51,7 +51,7 @@ public class BossAnimationController : MonoBehaviour
     void Start()
     {
         // Find the player
-        playerController = FindObjectOfType<PlayerController>();
+        playerController = FindFirstObjectByType<PlayerController>();
         
         // Setup grid center
         SetupGridCenter();
@@ -422,7 +422,7 @@ public class BossAnimationController : MonoBehaviour
             tempGridCenter = GameObject.FindGameObjectWithTag("PlayerArea")?.transform;
             
             if (tempGridCenter == null)
-                tempGridCenter = FindObjectOfType<PlayerController>()?.transform;
+                tempGridCenter = FindFirstObjectByType<PlayerController>()?.transform;
                 
             if (tempGridCenter == null)
                 tempGridCenter = transform; // Fallback to self

@@ -25,7 +25,8 @@ public class BossAnimationController : MonoBehaviour
     [Header("Grid Setup")]
     [SerializeField] private Vector2 gridSize = new Vector2(3, 3); // 3x3 grid
     [SerializeField] private float gridSpacing = 1.5f;
-    [SerializeField] private Transform gridCenter;
+    [SerializeField] private Transform gridCenter; // This should be set to the player area center
+    [SerializeField] private bool visualizeGrid = true; // For debugging in editor
     
     // Animation states - can be used as animator parameters
     private const string IDLE = "Idle";
@@ -39,6 +40,7 @@ public class BossAnimationController : MonoBehaviour
     private BossController bossController;
     private bool isPlayingAnimation = false;
     private TurnManager turnManager;
+    private PlayerController playerController;
     
     void Awake()
     {
@@ -48,17 +50,50 @@ public class BossAnimationController : MonoBehaviour
     
     void Start()
     {
-        // Initialize grid center if not set
-        if (gridCenter == null)
-        {
-            gridCenter = transform;
-        }
+        // Find the player
+        playerController = FindObjectOfType<PlayerController>();
+        
+        // Setup grid center
+        SetupGridCenter();
         
         // Subscribe to boss events
         if (bossController != null)
         {
             // Play idle animation by default
             PlayAnimation(IDLE);
+        }
+    }
+    
+    /// <summary>
+    /// Setup the grid center based on available references
+    /// </summary>
+    private void SetupGridCenter()
+    {
+        // If gridCenter is already set in the inspector, use that
+        if (gridCenter != null)
+            return;
+            
+        // Try to find a player area transform first
+        Transform playerArea = GameObject.FindGameObjectWithTag("PlayerArea")?.transform;
+        
+        if (playerArea != null)
+        {
+            gridCenter = playerArea;
+            Debug.Log("Grid center set to PlayerArea");
+        }
+        else if (playerController != null)
+        {
+            // If no player area is found, use player's position
+            gridCenter = playerController.transform;
+            Debug.Log("Grid center set to Player position");
+        }
+        else
+        {
+            // Last resort, create an object at a fixed position for the grid
+            GameObject gridObj = new GameObject("PlayerBattleArea");
+            gridObj.transform.position = new Vector3(0, -2, 0); // Adjust as needed for your game
+            gridCenter = gridObj.transform;
+            Debug.LogWarning("No player area found! Created a default grid center at " + gridObj.transform.position);
         }
     }
     
@@ -127,6 +162,12 @@ public class BossAnimationController : MonoBehaviour
     /// </summary>
     private Vector3[,] GetGridPositions()
     {
+        // Ensure grid center is set
+        if (gridCenter == null)
+        {
+            SetupGridCenter();
+        }
+        
         Vector3[,] positions = new Vector3[(int)gridSize.x, (int)gridSize.y];
         
         float startX = gridCenter.position.x - (gridSize.x - 1) * gridSpacing / 2;
@@ -369,16 +410,49 @@ public class BossAnimationController : MonoBehaviour
     /// </summary>
     void OnDrawGizmosSelected()
     {
-        if (gridCenter == null)
-            gridCenter = transform;
+        if (!visualizeGrid)
+            return;
             
-        Vector3[,] positions = GetGridPositions();
+        // Setup temporary grid center for editor visualization
+        Transform tempGridCenter = gridCenter;
         
-        Gizmos.color = Color.yellow;
+        if (tempGridCenter == null)
+        {
+            // Try to find player area or player for editor visualization
+            tempGridCenter = GameObject.FindGameObjectWithTag("PlayerArea")?.transform;
+            
+            if (tempGridCenter == null)
+                tempGridCenter = FindObjectOfType<PlayerController>()?.transform;
+                
+            if (tempGridCenter == null)
+                tempGridCenter = transform; // Fallback to self
+        }
+            
+        Vector3[,] positions = new Vector3[(int)gridSize.x, (int)gridSize.y];
+        
+        float startX = tempGridCenter.position.x - (gridSize.x - 1) * gridSpacing / 2;
+        float startY = tempGridCenter.position.y - (gridSize.y - 1) * gridSpacing / 2;
+        
         for (int x = 0; x < gridSize.x; x++)
         {
             for (int y = 0; y < gridSize.y; y++)
             {
+                positions[x, y] = new Vector3(
+                    startX + x * gridSpacing,
+                    startY + y * gridSpacing,
+                    0
+                );
+                
+                // Draw different colors for different attack zones
+                if (x < 2) // Left swipe zone
+                    Gizmos.color = new Color(1, 0, 0, 0.3f); // Red
+                else if (x >= gridSize.x - 2) // Right swipe zone
+                    Gizmos.color = new Color(0, 0, 1, 0.3f); // Blue
+                else // Middle column
+                    Gizmos.color = new Color(0, 1, 0, 0.3f); // Green
+                
+                Gizmos.DrawSphere(positions[x, y], 0.1f);
+                Gizmos.color = Color.yellow;
                 Gizmos.DrawWireSphere(positions[x, y], gridSpacing / 2);
             }
         }

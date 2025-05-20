@@ -121,6 +121,11 @@ public class BossController : MonoBehaviour
             {
                 yield return null;
             }
+            if (player != null && !player.IsDodging())
+            {
+                player.TakeDamage(attackPower);
+            }
+            turnManager.EndEnemyTurn();
         }
         else
         {

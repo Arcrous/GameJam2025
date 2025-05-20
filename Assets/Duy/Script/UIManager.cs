@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {

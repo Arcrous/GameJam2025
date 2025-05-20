@@ -8,8 +8,9 @@ public class OnlyOneBoss : MonoBehaviour
 {
     [Header("Only One Theme Implementation")]
     [SerializeField] private TraitType onlyOneTrait; // The ONE trait that can deal critical damage
-    [SerializeField] private float onlyOneMultiplier = 5.0f; // Massive multiplier for the ONE trait
+    [SerializeField] private float onlyOneMultiplier = 3.0f; // Massive multiplier for the ONE trait
     [SerializeField] private GameObject onlyOneVFX; // Special effect for the ONE trait
+    public bool hinted = false;
     
     [Header("UI")]
     [SerializeField] private GameObject onlyOneRevealPanel;
@@ -87,8 +88,8 @@ public class OnlyOneBoss : MonoBehaviour
         // Display special message in UI
         if (onlyOneRevealPanel != null && onlyOneRevealText != null && trait != null)
         {
-            onlyOneRevealText.text = "THE ONLY ONE!\n" + 
-                                     trait.displayName + " is the ONE trait that can defeat this boss!";
+            onlyOneRevealText.text = "THAT'S THE ONE!\n" + 
+                                     trait.displayName + " is the ONE fatal weakness of this enemy!";
             
             // Color the text to match the trait
             onlyOneRevealText.color = trait.displayColor;
@@ -114,6 +115,7 @@ public class OnlyOneBoss : MonoBehaviour
     // Called from UI to provide a hint about the special trait
     public void ProvideOnlyOneHint()
     {
+        if(hinted) return; // Prevent multiple hints
         // This could be triggered by a button that costs player something
         Trait trait = TraitManager.Instance.GetTraitByType(onlyOneTrait);
         if (trait != null)
@@ -122,15 +124,12 @@ public class OnlyOneBoss : MonoBehaviour
             UIManager uiManager = FindFirstObjectByType<UIManager>();
             if (uiManager != null && onlyOneRevealText != null)
             {
-                string hintText = "The boss seems unusually sensitive to the color: " + 
-                                 ColorToString(trait.displayColor);
-                
+                string hintText = "The boss seems to react strongly to the color: " + ColorToString(trait.displayColor);
+
                 // Could add this to a hints panel in UIManager
                 Debug.Log("HINT: " + hintText);
-                
-                // If you have a hint panel UI, show it here
-                // uiManager.ShowHint(hintText);
             }
+            hinted = true; // Mark as hinted
         }
     }
     

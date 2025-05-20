@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [SerializeField] TMPro.TextMeshProUGUI dodgeCounterText;
     public Image healthBar;
+    [SerializeField] float fillSpeed = 0.5f; // Speed of health bar fill animation
+    [SerializeField] Ease easingType; // Speed of health bar fill animation
 
     [Header("Visual Feedback")]
     [SerializeField] private Material flashMaterial;
@@ -366,6 +369,12 @@ public class PlayerController : MonoBehaviour
 
         // Update health bar
         UpdateHealthBar();
+        
+        if (currentHealth <= maxHealth * 0.25)
+        {
+            FindFirstObjectByType<OnlyOneBoss>().ProvideOnlyOneHint();
+
+        }
 
         // Play hit sound
         if (audioSource != null && hitSound != null)
@@ -387,7 +396,7 @@ public class PlayerController : MonoBehaviour
     {
         if (healthBar != null)
         {
-            healthBar.fillAmount = (float)currentHealth / maxHealth;
+            healthBar.DOFillAmount((float)currentHealth / maxHealth, fillSpeed).SetEase(easingType);
         }
     }
 

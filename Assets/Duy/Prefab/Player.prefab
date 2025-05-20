@@ -143,6 +143,9 @@ MonoBehaviour:
   attackPoint: {fileID: 5928832980410502296}
   attackSound: {fileID: 0}
   dodgeCounterText: {fileID: 0}
+  healthBar: {fileID: 0}
+  fillSpeed: 0.3
+  easingType: 3
   flashMaterial: {fileID: 0}
   flashDuration: 0.1
 --- !u!114 &5105340993101760010

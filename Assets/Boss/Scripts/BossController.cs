@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using static BossAnimationController;
 
 public class BossController : MonoBehaviour
@@ -16,9 +18,13 @@ public class BossController : MonoBehaviour
     [Header("Weaknesses")]
     public int numWeaknesses = 4;
     private List<TraitType> weaknesses = new List<TraitType>();
-    
+    private Dictionary<TraitType, GameObject> weaknessIconMap = new Dictionary<TraitType, GameObject>();
+    private Color onlyOneGoldColor = new Color(1f, 0.84f, 0, 1); // Gold color for "Only One" trait
+
     [Header("UI")]
     public Image healthBar;
+    [SerializeField] float fillSpeed = 0.5f; // Speed of health bar fill animation
+    [SerializeField] Ease easingType; // Speed of health bar fill animation
     public Transform weaknessIconsContainer;
     public Image weaknessIconPrefab;
     public GameObject attackIndicator;
@@ -66,35 +72,109 @@ public class BossController : MonoBehaviour
         Debug.Log("Setting up weakness icons");
         if (weaknessIconsContainer != null && weaknessIconPrefab != null)
         {
-            Debug.Log("Weakness icons container found");
             // Clear any existing icons
             foreach (Transform child in weaknessIconsContainer)
             {
-                Debug.Log("Destroying existing icon");
                 Destroy(child.gameObject);
             }
 
-            Debug.Log(weaknesses[0]);
 
             // Create icons for each weakness
             foreach (TraitType weakness in weaknesses)
             {
-                Debug.Log("Creating icon for weakness: " + weakness);
                 Trait trait = TraitManager.Instance.GetTraitByType(weakness);
                 if (trait != null)
                 {
-                    Debug.Log("Trait found: " + trait.displayName);
-                    Image icon = Instantiate(weaknessIconPrefab, weaknessIconsContainer);
-                    TextMeshProUGUI weaknessHint = icon.GetComponentInChildren<TextMeshProUGUI>();
-                    if (weaknessHint != null)
+                    Image weaknessIcon = Instantiate(weaknessIconPrefab, weaknessIconsContainer).GetComponent<Image>();
+
+                    //Get the border image
+                    Image borderImage = weaknessIcon.transform.GetChild(0).GetComponentInChildren<Image>();
+
+                    TextMeshProUGUI weaknessHint = borderImage.GetComponentInChildren<TextMeshProUGUI>();
+
+                    //Set up regular weaknesses
+                    if (borderImage != null) 
                     {
-                        // Set the hint text to the trait name
-                        weaknessHint.color = trait.displayColor;
+                        borderImage.color = Color.white;
                     }
 
-                    // If you have trait icons
-                    if (trait.icon != null)
-                        icon.sprite = trait.icon;
+                    if(weaknessHint != null)
+                    {
+                        weaknessHint.color = trait.displayColor;
+                    }
+                }
+            }
+
+            OnlyOneBoss onlyOneBoss = GetComponent<OnlyOneBoss>();
+            if (onlyOneBoss != null)
+            {
+                //Create the weakness icon
+                Image onlyOneIcon = Instantiate(weaknessIconPrefab, weaknessIconsContainer).GetComponent<Image>();
+
+                //Get the border image
+                Image borderImage = onlyOneIcon.transform.GetChild(0).GetComponentInChildren<Image>();
+
+                //Get the TextMeshPro component
+                TextMeshProUGUI questionMark = borderImage.GetComponentInChildren<TextMeshProUGUI>();
+
+                if(borderImage != null)
+                {
+                    borderImage.color = onlyOneGoldColor; // Set to gold color
+                }
+
+                if(questionMark != null)
+                {
+                    questionMark.color = Color.white;
+                }
+            }
+        }
+    }
+
+    public void RevealWeakness(TraitType traitType)
+    {
+        foreach (Transform weaknessContainer in weaknessIconsContainer)
+        {
+            Image mainImage = weaknessContainer.GetComponent<Image>();
+            Image borderImage = mainImage.transform.GetChild(0).GetComponentInChildren<Image>();
+            TextMeshProUGUI questionMark = borderImage.GetComponentInChildren<TextMeshProUGUI>();
+
+            //Check if this is the weakness we want to reveal
+            OnlyOneBoss onlyOneBoss = GetComponent<OnlyOneBoss>();
+            bool isOnlyOneTrait = onlyOneBoss != null && traitType == onlyOneBoss.GetOnlyOneTrait();
+
+            bool isMatch = false;
+
+            if (isOnlyOneTrait && borderImage.color == onlyOneGoldColor)
+            {
+                isMatch = true;
+            }
+            else if (!isOnlyOneTrait)
+            {
+                Trait trait = TraitManager.Instance.GetTraitByType(traitType);
+                if(trait != null && questionMark.color == trait.displayColor)
+                {
+                    isMatch = true;
+                }
+            }
+
+            if (isMatch)
+            {
+                //Get trait info
+                Trait trait = TraitManager.Instance.GetTraitByType(traitType);
+                if (trait != null)
+                {
+                    questionMark.gameObject.gameObject.SetActive(false); // Hide the question mark
+
+                    //Update the border color and the icon
+                    mainImage.color = Color.white;
+                    mainImage.sprite = trait.icon; // Set the icon to the trait icon
+                    borderImage.color = trait.displayColor; // Set the border color to the trait color
+
+                    if(weaknessRevealEffect != null)
+                    {
+                        Instantiate(weaknessRevealEffect, mainImage.transform.position, Quaternion.identity);
+                    }
+                    break;
                 }
             }
         }
@@ -193,6 +273,7 @@ public class BossController : MonoBehaviour
         {
             if (weaknesses.Contains(trait))
             {
+                RevealWeakness(trait); // Show the weakness icon
                 damageMultiplier += 0.5f; // Stack 50% more damage per weakness
                 wasWeak = true;
             }
@@ -209,7 +290,13 @@ public class BossController : MonoBehaviour
         // Calculate final damage
         int finalDamage = Mathf.RoundToInt(baseDamage * damageMultiplier);
         currentHealth -= finalDamage;
-        
+
+        //If currentHealth is equal to 25% of maxHealth, increase boss damage;
+        if (currentHealth <= maxHealth * 0.25f)
+        {
+            attackPower += 15; // Increase attack power by 5
+        }
+
         // Show damage effect
         if (damageParticle != null)
         {
@@ -234,7 +321,7 @@ public class BossController : MonoBehaviour
     {
         if (healthBar != null)
         {
-            healthBar.fillAmount = (float)currentHealth / maxHealth;
+            healthBar.DOFillAmount((float)currentHealth / maxHealth, fillSpeed).SetEase(easingType);
         }
     }
     
@@ -313,26 +400,4 @@ public class BossController : MonoBehaviour
         
         isAttacking = false;
     }
-    
-    /*// Called by attack button from player UI
-    public void ReceivePlayerAttack()
-    {
-        if (player != null)
-        {
-            PlayerTraitSystem traitSystem = player.GetComponent<PlayerTraitSystem>();
-            if (traitSystem != null)
-            {
-                Debug.Log("PlayerTraitSystem found on player. Calculating damage based on traits.");
-                // Get player traits and calculate damage
-                List<TraitType> playerTraits = traitSystem.GetPlayerTraits();
-                TakeDamage(player.attackPower, playerTraits);
-            }
-            else
-            {
-                Debug.LogWarning("PlayerTraitSystem not found on player. Using base damage.");  
-                // Fallback if no trait system
-                TakeDamage(player.attackPower, new List<TraitType>());
-            }
-        }
-    }*/
 }

@@ -133,6 +133,8 @@ MonoBehaviour:
   attackInterval: 1.5
   numWeaknesses: 4
   healthBar: {fileID: 0}
+  fillSpeed: 0.5
+  easingType: 3
   weaknessIconsContainer: {fileID: 0}
   weaknessIconPrefab: {fileID: 7409872900286850088, guid: 314c8c33d6ba942408dfb6c5c1165764, type: 3}
   attackIndicator: {fileID: 0}
@@ -168,6 +170,7 @@ MonoBehaviour:
   onlyOneTrait: 0
   onlyOneMultiplier: 5
   onlyOneVFX: {fileID: 0}
+  hinted: 0
   onlyOneRevealPanel: {fileID: 0}
   onlyOneRevealText: {fileID: 0}
   revealDuration: 3

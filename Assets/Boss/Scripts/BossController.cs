@@ -29,12 +29,14 @@ public class BossController : MonoBehaviour
     private PlayerController player;
     private TurnManager turnManager;
     private Animator animator;
+    private BossAnimationController animationController;
     private float damageMultiplierFromWeakness = 1.5f;
     private bool isAttacking = false;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        animationController = GetComponent<BossAnimationController>();
         turnManager = TurnManager.Instance;
         
         // Subscribe to turn change events
@@ -103,28 +105,42 @@ public class BossController : MonoBehaviour
         // Wait for reaction time window
         yield return new WaitForSeconds(attackInterval);
         
-        // Attack animation
-        if (animator != null)
-            animator.SetTrigger("Attack");
-        
         // Hide attack indicator
         if (attackIndicator != null)
             attackIndicator.SetActive(false);
         
-        // Deal damage if player is not dodging
-        if (player != null && !player.IsDodging())
+        // Use animation controller to play a random attack animation
+        if (animationController != null)
         {
-            // Instantiate attack effect if available
-            if (attackEffect != null)
-            {
-                Vector3 direction = player.transform.position - transform.position;
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                
-                Instantiate(attackEffect, transform.position, rotation);
-            }
+            animationController.PlayRandomAttackAnimation();
             
-            player.TakeDamage(attackPower);
+            // Wait until animation is no longer playing
+            while (animationController.IsAnimationPlaying())
+            {
+                yield return null;
+            }
+        }
+        else
+        {
+            // Fallback to original behavior if animation controller is missing
+            if (animator != null)
+                animator.SetTrigger("Attack");
+                
+            // Deal damage if player is not dodging
+            if (player != null && !player.IsDodging())
+            {
+                // Instantiate attack effect if available
+                if (attackEffect != null)
+                {
+                    Vector3 direction = player.transform.position - transform.position;
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                    
+                    Instantiate(attackEffect, transform.position, rotation);
+                }
+                
+                player.TakeDamage(attackPower);
+            }
         }
         
         isAttacking = false;
@@ -134,51 +150,51 @@ public class BossController : MonoBehaviour
     }
     
     public void TakeDamage(int baseDamage, List<TraitType> playerTraits)
-{
-    float damageMultiplier = 1.0f;
-    bool wasWeak = false;
-    
-    // Check if player has traits that match boss weaknesses
-    foreach (TraitType trait in playerTraits)
     {
-        if (weaknesses.Contains(trait))
+        float damageMultiplier = 1.0f;
+        bool wasWeak = false;
+        
+        // Check if player has traits that match boss weaknesses
+        foreach (TraitType trait in playerTraits)
         {
-            damageMultiplier += 0.5f; // Stack 50% more damage per weakness
-            wasWeak = true;
+            if (weaknesses.Contains(trait))
+            {
+                damageMultiplier += 0.5f; // Stack 50% more damage per weakness
+                wasWeak = true;
+            }
+        }
+        
+        // Check for "Only One" trait damage bonus
+        OnlyOneBoss onlyOneBoss = GetComponent<OnlyOneBoss>();
+        if (onlyOneBoss != null)
+        {
+            float onlyOneMultiplier = onlyOneBoss.GetBonusDamageMultiplier(playerTraits);
+            damageMultiplier *= onlyOneMultiplier;
+        }
+        
+        // Calculate final damage
+        int finalDamage = Mathf.RoundToInt(baseDamage * damageMultiplier);
+        currentHealth -= finalDamage;
+        
+        // Show damage effect
+        if (damageParticle != null)
+        {
+            damageParticle.Play();
+            
+            // If the attack hit a weakness, show a special effect
+            if (wasWeak && weaknessRevealEffect != null)
+                Instantiate(weaknessRevealEffect, transform.position, Quaternion.identity);
+        }
+        
+        // Update health bar
+        UpdateHealthBar();
+        
+        // Check if boss is defeated
+        if (currentHealth <= 0)
+        {
+            Die();
         }
     }
-    
-    // Check for "Only One" trait damage bonus
-    OnlyOneBoss onlyOneBoss = GetComponent<OnlyOneBoss>();
-    if (onlyOneBoss != null)
-    {
-        float onlyOneMultiplier = onlyOneBoss.GetBonusDamageMultiplier(playerTraits);
-        damageMultiplier *= onlyOneMultiplier;
-    }
-    
-    // Calculate final damage
-    int finalDamage = Mathf.RoundToInt(baseDamage * damageMultiplier);
-    currentHealth -= finalDamage;
-    
-    // Show damage effect
-    if (damageParticle != null)
-    {
-        damageParticle.Play();
-        
-        // If the attack hit a weakness, show a special effect
-        if (wasWeak && weaknessRevealEffect != null)
-            Instantiate(weaknessRevealEffect, transform.position, Quaternion.identity);
-    }
-    
-    // Update health bar
-    UpdateHealthBar();
-    
-    // Check if boss is defeated
-    if (currentHealth <= 0)
-    {
-        Die();
-    }
-}
     
     private void UpdateHealthBar()
     {
@@ -190,9 +206,24 @@ public class BossController : MonoBehaviour
     
     private void Die()
     {
-        // Boss is defeated
-        if (animator != null)
+        // Use animation controller for death animation
+        if (animationController != null)
+        {
+            StartCoroutine(animationController.PlayDeathAnimation());
+        }
+        else if (animator != null)
+        {
             animator.SetTrigger("Die");
+        }
+        
+        // End the battle with player victory after a short delay to allow death animation
+        StartCoroutine(DelayedGameEnd());
+    }
+    
+    private IEnumerator DelayedGameEnd()
+    {
+        // Wait for death animation to complete
+        yield return new WaitForSeconds(1.5f);
         
         // End the battle with player victory
         if (turnManager != null)
@@ -212,8 +243,16 @@ public class BossController : MonoBehaviour
     // Method called from animation events or UI
     public void TriggerSpecialAttack()
     {
-        // Implement special attack that's harder to dodge
-        StartCoroutine(SpecialAttackCoroutine());
+        // Use animation controller for special attack
+        if (animationController != null)
+        {
+            StartCoroutine(animationController.PlaySpecialAttackAnimation());
+        }
+        else
+        {
+            // Fallback to original behavior
+            StartCoroutine(SpecialAttackCoroutine());
+        }
     }
     
     private IEnumerator SpecialAttackCoroutine()

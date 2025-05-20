@@ -312,7 +312,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1189964791, guid: fa121d579db7f304a823d41d01cf212e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -320,7 +320,7 @@ SpriteRenderer:
   m_Size: {x: 3.5625, y: 3.8125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &678691756
@@ -369,6 +369,7 @@ MonoBehaviour:
   attackPower: 15
   attackInterval: 1.5
   numWeaknesses: 4
+  weaknesses: 
   healthBar: {fileID: 0}
   weaknessIconsContainer: {fileID: 0}
   weaknessIconPrefab: {fileID: 0}
@@ -376,6 +377,11 @@ MonoBehaviour:
   attackEffect: {fileID: 0}
   damageParticle: {fileID: 0}
   weaknessRevealEffect: {fileID: 0}
+  player: {fileID: 0}
+  turnManager: {fileID: 0}
+  animator: {fileID: 0}
+  damageMultiplierFromWeakness: 1.5
+  isAttacking: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

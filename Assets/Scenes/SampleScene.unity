@@ -225,6 +225,8 @@ GameObject:
   - component: {fileID: 678691758}
   - component: {fileID: 678691757}
   - component: {fileID: 678691756}
+  - component: {fileID: 678691759}
+  - component: {fileID: 678691760}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -350,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee783e8ae06ca7a4f9691241fbbec3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossController: {fileID: 0}
+  bossController: {fileID: 678691758}
   bossSpawnPoint: {fileID: 0}
 --- !u!114 &678691758
 MonoBehaviour:
@@ -361,7 +363,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 678691752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a53dc59f33adf6449cf1764db2724c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 0910c2d8223791c43943516bb63c9914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
@@ -369,7 +371,6 @@ MonoBehaviour:
   attackPower: 15
   attackInterval: 1.5
   numWeaknesses: 4
-  weaknesses: 
   healthBar: {fileID: 0}
   weaknessIconsContainer: {fileID: 0}
   weaknessIconPrefab: {fileID: 0}
@@ -377,11 +378,44 @@ MonoBehaviour:
   attackEffect: {fileID: 0}
   damageParticle: {fileID: 0}
   weaknessRevealEffect: {fileID: 0}
-  player: {fileID: 0}
-  turnManager: {fileID: 0}
-  animator: {fileID: 0}
-  damageMultiplierFromWeakness: 1.5
-  isAttacking: 0
+--- !u!114 &678691759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678691752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8c5d5d98ccba049b69ac865e36b5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &678691760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678691752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2807aba40f9f6df4ca353c196bf649eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackAnimationDuration: 0.5
+  specialAttackAnimationDuration: 0.8
+  deathAnimationDuration: 1.5
+  leftSwipeEffect: {fileID: 0}
+  rightSwipeEffect: {fileID: 0}
+  projectilePrefab: {fileID: 0}
+  specialAttackEffect: {fileID: 0}
+  leftSwipeSpawnPoint: {fileID: 0}
+  rightSwipeSpawnPoint: {fileID: 0}
+  projectileSpawnPoint: {fileID: 0}
+  gridSize: {x: 3, y: 3}
+  gridSpacing: 1.5
+  gridCenter: {fileID: 678691753}
+  attackPattern: 00000000010000000200000000000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

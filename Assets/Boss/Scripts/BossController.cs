@@ -109,10 +109,10 @@ public class BossController : MonoBehaviour
         if (attackIndicator != null)
             attackIndicator.SetActive(false);
         
-        // Use animation controller to play a random attack animation
+        // Use animation controller to play the next attack in the pattern
         if (animationController != null)
         {
-            animationController.PlayRandomAttackAnimation();
+            animationController.PlayNextAttackInPattern();
             
             // Wait until animation is no longer playing
             while (animationController.IsAnimationPlaying())
@@ -141,12 +141,12 @@ public class BossController : MonoBehaviour
                 
                 player.TakeDamage(attackPower);
             }
+            
+            // End turn after attack is finished
+            turnManager.EndPlayerTurn(); // This will cycle back to player turn
         }
         
         isAttacking = false;
-        
-        // End turn after attack is finished
-        turnManager.EndPlayerTurn(); // This will cycle back to player turn
     }
     
     public void TakeDamage(int baseDamage, List<TraitType> playerTraits)

@@ -27,26 +27,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    void Update()
-    {
-        // Test controls
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Attack();
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            TryDodge();
-        }
-
-        // Test player death (for development)
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(currentHealth);
-        }
-    }
-
+    
     public void Attack()
     {
         // Will be called when it's player's turn to attack
@@ -57,10 +38,7 @@ public class PlayerController : MonoBehaviour
             
         // Instantiate slash effect if available
         if (slashEffect != null && attackPoint != null)
-        {
-            GameObject slashVFX = Instantiate(slashEffect, attackPoint.position, attackPoint.rotation);
-            Destroy(slashVFX, 0.4f);
-        }
+            Instantiate(slashEffect, attackPoint.position, attackPoint.rotation);
     }
     
     public void TryDodge()

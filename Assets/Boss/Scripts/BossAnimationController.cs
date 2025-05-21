@@ -159,6 +159,7 @@ public class BossAnimationController : MonoBehaviour
             
         // Get the next attack in the pattern
         AttackType nextAttack = attackPattern[currentAttackIndex];
+	SetCurrentAttackType(nextAttack);
         
         // Move to the next attack in the pattern (loop around)
         currentAttackIndex = (currentAttackIndex + 1) % attackPattern.Length;

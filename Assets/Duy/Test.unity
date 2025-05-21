@@ -903,9 +903,21 @@ PrefabInstance:
       value: Boss
       objectReference: {fileID: 0}
     - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: flashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0f2605689e5810343b4f320ba63c9767, type: 3}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
       propertyPath: gridCenter
       value: 
       objectReference: {fileID: 1342726815}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: swipeSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a8561aa3e4c66a542bc0df98b4b19f55, type: 3}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: thunderSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 7f29131f1fd453542b0d6427ccf4ff88, type: 3}
     - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
       propertyPath: leftFlashPoint
       value: 
@@ -938,6 +950,18 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1737220207}
+    - target: {fileID: 4292488642282232583, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: flashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: deb15a72102b9bc4195620834339bb4a, type: 3}
+    - target: {fileID: 4292488642282232583, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: swipeSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a8561aa3e4c66a542bc0df98b4b19f55, type: 3}
+    - target: {fileID: 4292488642282232583, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: thunderSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f21d8308b95e8d4aa4b4b11d07a3910, type: 3}
     - target: {fileID: 4292488642282232583, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
       propertyPath: weaknessIconsContainer
       value: 
@@ -1722,6 +1746,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749334005}
   m_CullTransparentMesh: 1
+--- !u!1001 &792896680
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351811180591927511, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662832353257318780, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_Volume
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919567620330386280, guid: a0d03804826fcb049b7a10b788956458, type: 3}
+      propertyPath: m_Name
+      value: Audio Source
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0d03804826fcb049b7a10b788956458, type: 3}
 --- !u!1 &832845045
 GameObject:
   m_ObjectHideFlags: 0
@@ -47721,3 +47806,4 @@ SceneRoots:
   - {fileID: 374586549}
   - {fileID: 706838865}
   - {fileID: 1723045351}
+  - {fileID: 792896680}

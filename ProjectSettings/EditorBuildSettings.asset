@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: fa3ed1576c9f6554cbb655a2855cff58
   - enabled: 1
-    path: Assets/Duy/Test.unity
+    path: Assets/Duy/Main.unity
     guid: 47f29836466248f449176f3d3b66be04
   - enabled: 1
     path: Assets/Scenes/Win Scene.unity

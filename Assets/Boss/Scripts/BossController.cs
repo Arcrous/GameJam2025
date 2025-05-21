@@ -248,13 +248,13 @@ public class BossController : MonoBehaviour
 	    // Add attack type-specific delay after animation completes
         if (attackType == AttackType.TripleLeftSwipe || attackType == AttackType.TripleRightSwipe)
         {
-		Debug.Log(attackType);
+		    Debug.Log("Special attack" + attackType);
             // Longer delay for triple attack patterns
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(4f);
         }
         else
         {
-		Debug.Log(attackType);
+		    Debug.Log(attackType);
             // Standard delay for other patterns
             yield return new WaitForSeconds(0.5f);
         }

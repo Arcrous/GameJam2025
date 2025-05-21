@@ -113,20 +113,22 @@ public class OnlyOneBoss : MonoBehaviour
     public void ProvideOnlyOneHint()
     {
         if(hinted) return; // Prevent multiple hints
-        // This could be triggered by a button that costs player something
+        // Get trait info
         Trait trait = TraitManager.Instance.GetTraitByType(onlyOneTrait);
-        if (trait != null)
-        {
-            // Show hint UI
-            UIManager uiManager = FindFirstObjectByType<UIManager>();
-            if (uiManager != null && onlyOneRevealText != null)
-            {
-                string hintText = "The boss seems to react strongly to the color: " + ColorToString(trait.displayColor);
 
-                // Could add this to a hints panel in UIManager
-                Debug.Log("HINT: " + hintText);
-            }
-            hinted = true; // Mark as hinted
+        // Display special message in UI
+        if (onlyOneRevealPanel != null && onlyOneRevealText != null && trait != null)
+        {
+            onlyOneRevealText.color = trait.displayColor;
+
+            onlyOneRevealText.text = "THAT'S THE ONE!\n" +
+                                     "the Boss seems to react strongly to this color";
+
+            // Show the panel
+            onlyOneRevealPanel.GetComponent<CanvasGroup>().DOFade(1, .3f).SetEase(Ease.OutBack);
+
+            // Hide it after a few seconds
+            StartCoroutine(HideRevealPanel());
         }
     }
     

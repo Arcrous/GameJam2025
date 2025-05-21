@@ -356,11 +356,47 @@ public class BossAnimationController : MonoBehaviour
                 CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
             }
         }
-        
+
+        yield return new WaitForSeconds(1f);
+
+        for (int x = 0; x < 2; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                // Spawn effect at the attack point
+                if (leftSwipeEffect != null)
+                {
+                    Instantiate(leftSwipeEffect, gridPositions[x, y], leftSwipeSpawnPoint.rotation);
+                }
+
+                // Check if player is in this grid cell and deal damage
+                CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
+            }
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        for (int x = 0; x < 2; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                // Spawn effect at the attack point
+                if (leftSwipeEffect != null)
+                {
+                    Instantiate(leftSwipeEffect, gridPositions[x, y], leftSwipeSpawnPoint.rotation);
+                }
+
+                // Check if player is in this grid cell and deal damage
+                CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
+            }
+        }
+
         // Wait for animation to complete
-        yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
-	currentAttackDirection = AttackDirection.None;
+        yield return new WaitForSeconds(attackAnimationDuration + 3.5f * 0.5f);
+	    currentAttackDirection = AttackDirection.None;
         
+        Debug.Log("Finished triple left swipe attack");
+
         // Return to idle
         isPlayingAnimation = false;
     }
@@ -368,7 +404,7 @@ public class BossAnimationController : MonoBehaviour
     private IEnumerator PlayTripleRightSwipeAttack()
     {
         isPlayingAnimation = true;
-	currentAttackDirection = AttackDirection.Left;
+	    currentAttackDirection = AttackDirection.Left;
         
         // Play animation
         PlayAnimation(TRIPLE_RIGHT_SWIPE);
@@ -380,26 +416,63 @@ public class BossAnimationController : MonoBehaviour
         
         // Get grid positions
         Vector3[,] gridPositions = GetGridPositions();
-        
-        // Hit the left 2 columns
-        for (int x = 0; x < 2; x++)
+
+        // Hit the right 2 columns
+        for (int x = (int)gridSize.x - 2; x < gridSize.x; x++)
         {
             for (int y = 0; y < gridSize.y; y++)
             {
                 // Spawn effect at the attack point
-                if (leftSwipeEffect != null)
+                if (rightSwipeEffect != null)
                 {
-                    Instantiate(leftSwipeEffect, gridPositions[x, y], leftSwipeSpawnPoint.rotation);
+                    Instantiate(rightSwipeEffect, gridPositions[x, y], rightSwipeSpawnPoint.rotation);
                 }
-                
+
                 // Check if player is in this grid cell and deal damage
                 CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
             }
         }
-        
+
+        yield return new WaitForSeconds(1f);
+
+        // Hit the right 2 columns
+        for (int x = (int)gridSize.x - 2; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                // Spawn effect at the attack point
+                if (rightSwipeEffect != null)
+                {
+                    Instantiate(rightSwipeEffect, gridPositions[x, y], rightSwipeSpawnPoint.rotation);
+                }
+
+                // Check if player is in this grid cell and deal damage
+                CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
+            }
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        // Hit the right 2 columns
+        for (int x = (int)gridSize.x - 2; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                // Spawn effect at the attack point
+                if (rightSwipeEffect != null)
+                {
+                    Instantiate(rightSwipeEffect, gridPositions[x, y], rightSwipeSpawnPoint.rotation);
+                }
+
+                // Check if player is in this grid cell and deal damage
+                CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
+            }
+        }
+
         // Wait for animation to complete
-        yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
+        yield return new WaitForSeconds(attackAnimationDuration + 3.5f);
         
+        Debug.Log("Finished triple right swipe attack");
         // Return to idle
         isPlayingAnimation = false;
     }
@@ -451,9 +524,9 @@ public class BossAnimationController : MonoBehaviour
 
         // Play animation
         PlayAnimation(SPECIAL_ATTACK);
-	yield return new WaitForSeconds(1f);
+	    yield return new WaitForSeconds(1f);
         SpawnLightningInQuadrant(true);
-	SpawnLightningInQuadrant(false);
+	    SpawnLightningInQuadrant(false);
         
         // Wait for animation to reach the climax
         yield return new WaitForSeconds(specialAttackAnimationDuration * 0.6f);
@@ -486,11 +559,11 @@ public class BossAnimationController : MonoBehaviour
         PlayAnimation(IDLE);
         isPlayingAnimation = false;
     }
-    
+
     /// <summary>
     /// Check if the player is in a specific grid cell and deal damage if they are
     /// </summary>
-    private void CheckPlayerInCell(Vector3 cellPosition, float cellRadius)
+    public void CheckPlayerInCell(Vector3 cellPosition, float cellRadius)
     {
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null && bossController != null)
@@ -560,7 +633,7 @@ public class BossAnimationController : MonoBehaviour
         else if (attackDir == AttackDirection.Both)
         {
             // For attacks that hit everywhere (like special attack), any dodge is wrong
-            return true;
+            return false;
         }
         else if (attackDir == AttackDirection.None)
         {
@@ -704,7 +777,7 @@ public class BossAnimationController : MonoBehaviour
                 Vector3 worldPos = mainCam.ScreenToWorldPoint(screenPos);
 
                 GameObject lightning = Instantiate(lightningStrikePrefab, worldPos, Quaternion.identity);
-		    if (thunderSound != null) audioSource.PlayOneShot(thunderSound, .3f);
+		        if (thunderSound != null) audioSource.PlayOneShot(thunderSound, .3f);
                 Destroy(lightning, lightningLifetime);
             }
         }

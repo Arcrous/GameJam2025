@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 690
-  attackPower: 15
+  attackPower: 20
   attackInterval: 0
   numWeaknesses: 4
   healthBar: {fileID: 0}
@@ -227,7 +227,7 @@ MonoBehaviour:
   thunderSound: {fileID: 8300000, guid: 2079f47466e38d749a383d2b234c0302, type: 3}
   swipeSound: {fileID: 8300000, guid: a8561aa3e4c66a542bc0df98b4b19f55, type: 3}
   useRandomAttacks: 1
-  availableAttacks: 0100000002000000030000000400000005000000
+  availableAttacks: 010000000200000003000000
 --- !u!70 &1541291045649112260
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

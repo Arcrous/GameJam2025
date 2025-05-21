@@ -126,27 +126,33 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 100
   attackPower: 10
+  chargePower: 0
   dodgeCooldown: 0.5
   dodgeDistance: 1.5
   dodgeDuration: 0.25
   dodgeInvulnerabilityTime: 0.5
   dodgeLeftEffect: {fileID: 796031269007609945, guid: f270f55b4b9618a45a29ad1a53f2d7c1, type: 3}
   dodgeRightEffect: {fileID: 796031269007609945, guid: 321c06c0413be71448cab3606c201ca2, type: 3}
-  dodgeSound: {fileID: 0}
-  hitSound: {fileID: 0}
+  dodgeSound: {fileID: 8300000, guid: 85051e02e2da58a4c961f898741e46bf, type: 3}
+  hitSound: {fileID: 8300000, guid: 065bda9f1741613418fc5030c9b198a1, type: 3}
   dodgeLeftKey: 97
   dodgeRightKey: 100
+  dodgeCounterScaleNew: {x: 1.5, y: 1.5, z: 1.5}
+  dodgeCounterScaleOld: {x: 1, y: 1, z: 1}
   minX: -5
   maxX: 5
   slashEffect: {fileID: 7862141871414164757, guid: 98f51a29c1b18d14896416ea055299a5, type: 3}
   counterEffect: {fileID: 3175613100091123593, guid: 12639cacf7e081e439b2ab054abdfe0e, type: 3}
+  chargeEffect: {fileID: 0}
   attackPoint: {fileID: 5928832980410502296}
-  attackSound: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: e0897c72da2c16f49a70f2a42d2f777c, type: 3}
+  counterSound: {fileID: 8300000, guid: 172a260aa683b7546804712f32df0132, type: 3}
   dodgeCounterText: {fileID: 0}
+  dodgeCounterRect: {fileID: 0}
   healthBar: {fileID: 0}
   fillSpeed: 0.3
   easingType: 3
-  flashMaterial: {fileID: 0}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
 --- !u!114 &5105340993101760010
 MonoBehaviour:

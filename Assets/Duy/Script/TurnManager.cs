@@ -19,7 +19,6 @@ public class TurnManager : MonoBehaviour
     private TurnState currentState;
     private PlayerController player;
     private BossController boss;
-    private bool processingTurn = false;
 
     public delegate void TurnChangeDelegate(TurnState newState);
     public event TurnChangeDelegate OnTurnChanged;
@@ -55,8 +54,6 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator ProcessCounterAttack()
     {
-        processingTurn = true;
-
         // Small delay for visual clarity before counter attack
         yield return new WaitForSeconds(0.5f);
 
@@ -72,7 +69,6 @@ public class TurnManager : MonoBehaviour
         player.ResetDodgeCount();
 
         // Now move to player turn
-        processingTurn = false;
         StartCoroutine(DelayedTurnChange(TurnState.PlayerTurn));
     }
 

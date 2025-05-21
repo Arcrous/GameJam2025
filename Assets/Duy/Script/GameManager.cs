@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
         lineageSystem = GetComponent<LineageSystem>();
         if (lineageSystem == null)
             lineageSystem = gameObject.AddComponent<LineageSystem>();
-
+        
         // Set max generations based on boss weaknesses
         if (lineageSystem != null)
         {
@@ -52,7 +53,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(currentPlayer.gameObject);
             currentPlayer = null;
+
         }
+
+        playerSpawnPoint = GameObject.Find("PlayerSpawnPoint").transform;
+        //Debug.Log("Player spawn point found: " + playerSpawnPoint.name);
+        bossController = GameObject.Find("Boss").GetComponent<BossController>();
+        //Debug.Log("Boss controller found: " + bossController.name);
 
         gameActive = true;
         traitSelectionInProgress = true;
@@ -209,12 +216,7 @@ public class GameManager : MonoBehaviour
         gameActive = false;
         Debug.Log("Game over. Victory: " + victory);
 
-        // Show game over UI
-        UIManager uiManager = FindFirstObjectByType<UIManager>();
-        if (uiManager != null)
-        {
-            uiManager.ShowGameOver(victory);
-        }
+        SceneManager.LoadScene("Win Scene");
     }
 
     public List<TraitType> GetBossWeaknesses()

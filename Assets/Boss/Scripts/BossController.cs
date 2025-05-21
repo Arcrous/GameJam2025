@@ -33,6 +33,8 @@ public class BossController : MonoBehaviour
     public GameObject attackEffect;
     public ParticleSystem damageParticle;
     public GameObject weaknessRevealEffect;
+    [SerializeField] private GameObject hitEffect;
+    [SerializeField] private GameObject specialHitEffect;
 
     private PlayerController player;
     private TurnManager turnManager;
@@ -345,6 +347,22 @@ public class BossController : MonoBehaviour
                 // Reveal the Only One trait weakness icon
                 RevealWeakness(onlyOneTrait);
                 wasWeak = true;
+
+                //Play special hit effect
+                if (specialHitEffect != null)
+                {
+                    GameObject VFX = Instantiate(specialHitEffect, transform.position, transform.rotation);
+                    Destroy(VFX, 0.31f);
+                }
+            }
+            else
+            {
+                //Play normal hit effect
+                if (hitEffect != null)
+                {
+                    GameObject VFX = Instantiate(hitEffect, transform.position, transform.rotation);
+                    Destroy(VFX, 0.31f);
+                }
             }
 
             float onlyOneMultiplier = onlyOneBoss.GetBonusDamageMultiplier(playerTraits);

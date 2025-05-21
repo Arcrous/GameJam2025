@@ -3,9 +3,11 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
     [Header("Trait Selection")]
     public GameObject traitSelectionPanel;
     public Transform traitButtonContainer;
@@ -22,14 +24,28 @@ public class UIManager : MonoBehaviour
     public Transform traitIconsContainer;
     public Image traitIconPrefab;
     public Image borderIconPrefab;
-
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] RectTransform pausePanel;
+    [SerializeField] float pauseYIn, pauseYOut;
+    [SerializeField] CanvasGroup darkPanel;
+    [SerializeField] Button pauseButton;
+    [SerializeField] float animDuration;
 
     [Header("Combat UI")]
     public Button attackButton;
     public Button chargeButton;
+    [SerializeField] RectTransform playerButtonsRect;
+    [SerializeField] float insideX, outsideX;
+    [SerializeField] CanvasGroup dodgeButtons;
 
     [Header("Debug")]
     [SerializeField] private bool showAllTraits = false; // Set to true to show all available traits
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
 
     private void Start()
     {
@@ -44,31 +60,32 @@ public class UIManager : MonoBehaviour
         if(chargeButton != null)
             chargeButton.onClick.AddListener(OnChargeButtonClicked);
 
+        if(pauseButton != null)
+            pauseButton.onClick.AddListener(OnPauseButtonClicked);
+
         // Subscribe to turn changes
         TurnManager.Instance.OnTurnChanged += UpdateButtonsForTurnState;
     }
 
-    private void OnAttackButtonClicked()
+    public void OnAttackButtonClicked()
     {
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             player.Attack();
-
-            // End player turn
-            TurnManager.Instance.EndPlayerTurn();
+            PlayerButtonOutro();
+            DodgeButtonReveal();
         }
     }
 
-    private void OnChargeButtonClicked()
+    public void OnChargeButtonClicked()
     {
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             player.Charge();
-
-            // End player turn
-            TurnManager.Instance.EndPlayerTurn();
+            PlayerButtonOutro();
+            DodgeButtonReveal();
         }
     }
 
@@ -77,8 +94,77 @@ public class UIManager : MonoBehaviour
         if (attackButton != null)
             attackButton.interactable = (newState == TurnState.PlayerTurn);
 
+        if (attackButton.interactable == true)
+        {
+            PlayerButtonIntro();
+            DodgeButtonHide();
+        }
+
         if(chargeButton != null)
             chargeButton.interactable = (newState == TurnState.PlayerTurn);
+    }
+
+    public void PlayerButtonIntro()
+    {
+        playerButtonsRect.DOAnchorPosX(insideX, animDuration).SetEase(Ease.OutBack);
+    }
+
+    public void PlayerButtonOutro()
+    {
+        playerButtonsRect.DOAnchorPosX(outsideX, animDuration).SetEase(Ease.OutBack).OnComplete(() =>
+        {
+            // End player turn
+            TurnManager.Instance.EndPlayerTurn();
+        });
+    }
+
+    public void DodgeButtonReveal()
+    {
+        dodgeButtons.DOFade(1, animDuration).SetEase(Ease.OutBack);
+    }
+
+    public void DodgeButtonHide()
+    {
+        dodgeButtons.DOFade(0, animDuration).SetEase(Ease.OutBack);
+    }
+
+    void OnPauseButtonClicked()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+        PausePanelIntro();
+    }
+
+    void PausePanelIntro()
+    {
+        pausePanel.DOAnchorPosY(pauseYIn, animDuration).SetEase(Ease.OutBack).SetUpdate(true);
+        darkPanel.DOFade(1, animDuration/2).SetEase(Ease.OutBack).SetUpdate(true);
+    }
+
+    void PausePanelOutro()
+    {
+        darkPanel.DOFade(0, animDuration / 2).SetEase(Ease.OutBack).SetUpdate(true);
+        pausePanel.DOAnchorPosY(pauseYOut, animDuration).SetEase(Ease.OutBack).SetUpdate(true).OnComplete(() =>
+        {
+            pauseMenu.SetActive(false);
+        });
+    }
+
+    public void Resume()
+    {
+        PausePanelOutro();
+        Time.timeScale = 1;
+    }
+
+    public void RestartLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitToMenu(string levelToLoad)
+    {
+        SceneManager.LoadScene(levelToLoad);
     }
 
     private void HideAllPanels()

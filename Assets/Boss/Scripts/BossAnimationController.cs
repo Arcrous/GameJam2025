@@ -73,7 +73,7 @@ public class BossAnimationController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         bossController = GetComponent<BossController>();
-	audioSource = GetComponent<AudioSource>();
+	    audioSource = GetComponent<AudioSource>();
 
     	if (audioSource == null)
     	{	
@@ -153,8 +153,8 @@ public class BossAnimationController : MonoBehaviour
         LeftSwipe,
         RightSwipe,
         SpecialAttack,
-	TripleLeftSwipe,
-	TripleRightSwipe
+	    TripleLeftSwipe,
+	    TripleRightSwipe
     }
     
     /// <summary>
@@ -167,7 +167,7 @@ public class BossAnimationController : MonoBehaviour
             
         // Get the next attack in the pattern
         AttackType nextAttack = availableAttacks[Random.Range(0, availableAttacks.Length)];
-	SetCurrentAttackType(nextAttack);
+	    SetCurrentAttackType(nextAttack);
 
         // Execute the attack
         switch (nextAttack)
@@ -704,7 +704,7 @@ public class BossAnimationController : MonoBehaviour
                 Vector3 worldPos = mainCam.ScreenToWorldPoint(screenPos);
 
                 GameObject lightning = Instantiate(lightningStrikePrefab, worldPos, Quaternion.identity);
-		if (thunderSound != null) audioSource.PlayOneShot(thunderSound);
+		    if (thunderSound != null) audioSource.PlayOneShot(thunderSound, .3f);
                 Destroy(lightning, lightningLifetime);
             }
         }
@@ -715,7 +715,7 @@ public class BossAnimationController : MonoBehaviour
 if (warningFlashPrefab != null && leftFlashPoint != null)
     {
         GameObject flash = Instantiate(warningFlashPrefab, leftFlashPoint.position, Quaternion.identity);
-	if (flashSound != null) audioSource.PlayOneShot(flashSound);
+	if (flashSound != null) audioSource.PlayOneShot(flashSound, 1f);
         Destroy(flash, warningFlashDuration);
     }
 }
@@ -724,7 +724,7 @@ private void SpawnRightFlash()
 	{
 if (warningFlashPrefab != null && rightFlashPoint != null)
     {
-	if (flashSound != null) audioSource.PlayOneShot(flashSound);
+	if (flashSound != null) audioSource.PlayOneShot(flashSound, .7f);
         GameObject flash = Instantiate(warningFlashPrefab, rightFlashPoint.position, Quaternion.identity);
 
         Destroy(flash, warningFlashDuration);
@@ -733,7 +733,7 @@ if (warningFlashPrefab != null && rightFlashPoint != null)
 
     private void PlaySwipeSound()
     {
-	if (swipeSound != null) audioSource.PlayOneShot(swipeSound);
+	if (swipeSound != null) audioSource.PlayOneShot(swipeSound, 1f);
     }
 
 private void SetCurrentAttackType(AttackType attack)

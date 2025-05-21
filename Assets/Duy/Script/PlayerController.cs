@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [Header("Dodge QTE")]
     [SerializeField] private float dodgeDistance = 1.5f; // How far to dodge
     [SerializeField] private float dodgeDuration = 0.25f; // How long the dodge movement takes
-    [SerializeField] private float dodgeInvulnerabilityTime = 0.5f; // How long player is invulnerable during dodge
+    [SerializeField] private float dodgeInvulnerabilityTime = 1f; // How long player is invulnerable during dodge
     [SerializeField] private GameObject dodgeLeftEffect;
     [SerializeField] private GameObject dodgeRightEffect;
     [SerializeField] private AudioClip dodgeSound;
@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode dodgeLeftKey = KeyCode.A;
     [SerializeField] private KeyCode dodgeRightKey = KeyCode.D;
     private bool dodgingLeft = false;
+    [SerializeField] Vector3 dodgeCounterScaleNew;
+    [SerializeField] Vector3 dodgeCounterScaleOld;
 
     [Header("Movement Boundaries")]
     [SerializeField] private float minX = -5f; // Left boundary
@@ -39,13 +41,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject chargeEffect;
     [SerializeField] Transform attackPoint;
     [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip counterSound;
     [SerializeField] TMPro.TextMeshProUGUI dodgeCounterText;
+    [SerializeField] private RectTransform dodgeCounterRect;
     public Image healthBar;
     [SerializeField] float fillSpeed = 0.5f; // Speed of health bar fill animation
     [SerializeField] Ease easingType; // Speed of health bar fill animation
 
     [Header("Visual Feedback")]
-    [SerializeField] private Material flashMaterial;
+    [SerializeField] private Color flashColor;
     [SerializeField] private float flashDuration = 0.1f;
 
     // Internal state
@@ -56,7 +60,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPosition; // Target position for dodge
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private Material originalMaterial;
+    private Color originalColor;
     private AudioSource audioSource;
     private bool isReturning = false; // Flag to track return movement
     private int dodgeCount = 0; // Track successful dodges for counter attacks
@@ -64,10 +68,11 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
 
         dodgeCounterText = GameObject.Find("DodgeCounterText").GetComponent<TMPro.TextMeshProUGUI>();
+        dodgeCounterRect = GameObject.Find("DodgeCounterText").GetComponent<RectTransform>();
         healthBar = GameObject.Find("HealthFillPlayer").GetComponent<Image>();
 
         // Create audio source if it doesn't exist
@@ -80,7 +85,7 @@ public class PlayerController : MonoBehaviour
         // Cache original material
         if (spriteRenderer != null)
         {
-            originalMaterial = spriteRenderer.material;
+            originalColor = spriteRenderer.color;
         }
     }
 
@@ -91,16 +96,33 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        {
+            //UIManager.Instance.OnPauseButtonClicked();
+        }
+
         if (TurnManager.Instance.GetCurrentState() == TurnState.EnemyTurn && canDodge && !isDodging && !isDodgeMoving && !isReturning)
         {
             // Check for dodge input
-            if (Input.GetKeyDown(dodgeLeftKey))
+            if (Input.GetKeyDown(dodgeLeftKey) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 DodgeInDirection(true); // True = left
             }
-            else if (Input.GetKeyDown(dodgeRightKey))
+            else if (Input.GetKeyDown(dodgeRightKey) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 DodgeInDirection(false); // False = right
+            }
+        }
+        else if(TurnManager.Instance.GetCurrentState() == TurnState.PlayerTurn)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                UIManager.Instance.OnAttackButtonClicked();
+            }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                UIManager.Instance.OnChargeButtonClicked();
             }
         }
 
@@ -200,7 +222,7 @@ public class PlayerController : MonoBehaviour
         // Play dodge sound
         if (audioSource != null && dodgeSound != null)
         {
-            audioSource.PlayOneShot(dodgeSound);
+            audioSource.PlayOneShot(dodgeSound, .5f);
         }
 
         if (dodgeLeft)
@@ -323,13 +345,19 @@ public class PlayerController : MonoBehaviour
         // Play attack sound
         if (audioSource != null && attackSound != null)
         {
-            audioSource.PlayOneShot(attackSound);
+            audioSource.PlayOneShot(attackSound, .5f);
         }
     }
 
     public void CounterAttack()
     {
         if (dodgeCount <= 0) return;
+
+        // Play attack sound
+        if (audioSource != null && attackSound != null)
+        {
+            audioSource.PlayOneShot(counterSound, .5f);
+        }
 
         // Calculate bonus damage based on dodge count
         int bonusDamage = attackPower * dodgeCount;
@@ -409,7 +437,7 @@ public class PlayerController : MonoBehaviour
         // Play hit sound
         if (audioSource != null && hitSound != null)
         {
-            audioSource.PlayOneShot(hitSound);
+            audioSource.PlayOneShot(hitSound, .5f);
         }
 
         // Visual feedback
@@ -433,16 +461,16 @@ public class PlayerController : MonoBehaviour
     // Visual feedback for taking damage
     private IEnumerator FlashSprite()
     {
-        if (spriteRenderer != null && flashMaterial != null)
+        if (spriteRenderer != null && flashColor != null)
         {
             // Switch to flash material
-            spriteRenderer.material = flashMaterial;
+            spriteRenderer.color = flashColor;
 
             // Wait for flash duration
             yield return new WaitForSeconds(flashDuration);
 
             // Switch back to original material
-            spriteRenderer.material = originalMaterial;
+            spriteRenderer.color = originalColor;
         }
     }
 
@@ -487,10 +515,17 @@ public class PlayerController : MonoBehaviour
         if (dodgeCounterText != null && dodgeCount > 0)
         {
             dodgeCounterText.text = "x" + dodgeCount;
+            
+            dodgeCounterRect.localScale = new Vector3(1, 1, 1); // Reset scale to zero for animation
+            dodgeCounterRect.DOScale(dodgeCounterScaleNew, .3f).SetEase(Ease.OutBack).OnComplete(() =>
+            {
+                dodgeCounterRect.DOScale(dodgeCounterScaleOld, .3f).SetEase(Ease.OutBack);
+            });
         }
         else if (dodgeCounterText != null && dodgeCount <= 0)
         {
-            dodgeCounterText.text = "";
+            dodgeCounterRect.DOScale(0, .3f).SetEase(Ease.InBack);
+            //dodgeCounterText.text = "0";
         }
     }
 

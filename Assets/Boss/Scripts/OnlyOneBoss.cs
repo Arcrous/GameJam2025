@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class OnlyOneBoss : MonoBehaviour
 {
@@ -26,10 +27,6 @@ public class OnlyOneBoss : MonoBehaviour
         
         // Choose the "Only One" trait randomly
         DetermineOnlyOneTrait();
-        
-        // Hide the reveal panel if it exists
-        if (onlyOneRevealPanel != null)
-            onlyOneRevealPanel.SetActive(false);
     }
     
     private void DetermineOnlyOneTrait()
@@ -93,9 +90,9 @@ public class OnlyOneBoss : MonoBehaviour
             
             // Color the text to match the trait
             onlyOneRevealText.color = trait.displayColor;
-            
+
             // Show the panel
-            onlyOneRevealPanel.SetActive(true);
+            onlyOneRevealPanel.GetComponent<CanvasGroup>().DOFade(1, .3f).SetEase(Ease.OutBack);
             
             // Hide it after a few seconds
             StartCoroutine(HideRevealPanel());
@@ -109,7 +106,7 @@ public class OnlyOneBoss : MonoBehaviour
         yield return new WaitForSeconds(revealDuration);
         
         if (onlyOneRevealPanel != null)
-            onlyOneRevealPanel.SetActive(false);
+            onlyOneRevealPanel.GetComponent<CanvasGroup>().DOFade(0, .3f).SetEase(Ease.OutBack);
     }
     
     // Called from UI to provide a hint about the special trait

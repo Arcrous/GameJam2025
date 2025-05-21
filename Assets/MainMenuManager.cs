@@ -7,14 +7,7 @@ public class MainMenuManager : MonoBehaviour
     public void StartGame()
     {
         // Replace "GameScene" with the actual name of your gameplay scene
-        SceneManager.LoadScene("Test");
-    }
-
-    // Call this to load the instructions scene
-    public void Instructions()
-    {
-        // Replace "Instructions" with your instructions scene name
-        SceneManager.LoadScene("Instructions");
+        SceneManager.LoadScene("Main");
     }
 
     // Call this to quit the game

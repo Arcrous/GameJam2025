@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7521228810499705950}
   - component: {fileID: 1876334745399543918}
   - component: {fileID: 1541291045649112260}
+  - component: {fileID: 4089840416356331048}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -36,7 +37,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.73, z: 0}
   m_LocalScale: {x: 1.2828, y: 1.2828, z: 1.2828}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 508434379364332360}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8941392928944689601
@@ -130,7 +132,7 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 690
   attackPower: 15
-  attackInterval: 1.5
+  attackInterval: 0
   numWeaknesses: 4
   healthBar: {fileID: 0}
   fillSpeed: 0.5
@@ -141,6 +143,8 @@ MonoBehaviour:
   attackEffect: {fileID: 0}
   damageParticle: {fileID: 0}
   weaknessRevealEffect: {fileID: 0}
+  hitEffect: {fileID: 1645525749790897506, guid: b908c076634352c478f3d1f35a7a7f39, type: 3}
+  specialHitEffect: {fileID: 1645525749790897506, guid: 4efda194387eb2b42944ab3e30983d36, type: 3}
 --- !u!114 &7177587901984584927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +177,7 @@ MonoBehaviour:
   hinted: 0
   onlyOneRevealPanel: {fileID: 0}
   onlyOneRevealText: {fileID: 0}
-  revealDuration: 2
+  revealDuration: 1
 --- !u!114 &7521228810499705950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,10 +210,11 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   specialAttackEffect: {fileID: 0}
   lightningStrikePrefab: {fileID: 6277059408603457842, guid: d70fb13211d51054984f8c1927b7b8a6, type: 3}
-  lightningLifetime: 0.6
-  warningFlashPrefab: {fileID: 0}
-  leftFlashPoint: {fileID: 0}
-  rightFlashPoint: {fileID: 0}
+  lightningLifetime: 0.5
+  warningFlashPrefab: {fileID: 5838053470120460181, guid: 93184a91c3f627840a5abed929b07f00, type: 3}
+  warningFastFlashPrefab: {fileID: 0}
+  leftFlashPoint: {fileID: 508434379364332360}
+  rightFlashPoint: {fileID: 508434379364332360}
   warningFlashDuration: 0.1
   leftSwipeSpawnPoint: {fileID: 0}
   rightSwipeSpawnPoint: {fileID: 0}
@@ -218,7 +223,11 @@ MonoBehaviour:
   gridSpacing: 1
   gridCenter: {fileID: 0}
   visualizeGrid: 1
-  attackPattern: 02000000010000000200000001000000
+  flashSound: {fileID: 8300000, guid: 0f2605689e5810343b4f320ba63c9767, type: 3}
+  thunderSound: {fileID: 8300000, guid: 2079f47466e38d749a383d2b234c0302, type: 3}
+  swipeSound: {fileID: 8300000, guid: a8561aa3e4c66a542bc0df98b4b19f55, type: 3}
+  useRandomAttacks: 1
+  availableAttacks: 0100000002000000030000000400000005000000
 --- !u!70 &1541291045649112260
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -256,3 +265,131 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 3.5625, y: 3.8125}
   m_Direction: 0
+--- !u!82 &4089840416356331048
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184618208776060882}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &1695069513808961494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 508434379364332360}
+  m_Layer: 0
+  m_Name: Flash
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &508434379364332360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695069513808961494}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.774, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6467768425472992682}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

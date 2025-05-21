@@ -906,6 +906,26 @@ PrefabInstance:
       propertyPath: gridCenter
       value: 
       objectReference: {fileID: 1342726815}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: leftFlashPoint
+      value: 
+      objectReference: {fileID: 706838865}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: rightFlashPoint
+      value: 
+      objectReference: {fileID: 1723045351}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: warningFlashPrefab
+      value: 
+      objectReference: {fileID: 5838053470120460181, guid: 93184a91c3f627840a5abed929b07f00, type: 3}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: 'attackPattern.Array.data[0]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: 'attackPattern.Array.data[1]'
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3248899478854739930, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
       propertyPath: onlyOneRevealText
       value: 
@@ -1383,6 +1403,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704580867}
   m_CullTransparentMesh: 1
+--- !u!1 &706838864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 706838865}
+  m_Layer: 0
+  m_Name: LeftFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &706838865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706838864}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.67, y: 4.43, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724341535
 GameObject:
   m_ObjectHideFlags: 0
@@ -23366,6 +23417,37 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   bossSetup: {fileID: 0}
   uiManager: {fileID: 0}
+--- !u!1 &1723045350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1723045351}
+  m_Layer: 0
+  m_Name: RightFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1723045351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723045350}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.67, y: 4.43, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1737220204
 GameObject:
   m_ObjectHideFlags: 0
@@ -47637,3 +47719,5 @@ SceneRoots:
   - {fileID: 399072756}
   - {fileID: 521263509}
   - {fileID: 374586549}
+  - {fileID: 706838865}
+  - {fileID: 1723045351}

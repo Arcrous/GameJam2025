@@ -224,6 +224,7 @@ public class BossController : MonoBehaviour
         // Use animation controller to play the next attack in the pattern
         if (animationController != null)
         {
+	    AttackType attackType = animationController.GetCurrentAttackType();
             animationController.PlayNextAttackInPattern();
 
             // Wait until animation is no longer playing
@@ -231,6 +232,18 @@ public class BossController : MonoBehaviour
             {
                 yield return null;
             }
+
+	    // Add attack type-specific delay after animation completes
+        if (attackType == AttackType.TripleLeftSwipe || attackType == AttackType.TripleRightSwipe)
+        {
+            // Longer delay for triple attack patterns
+            yield return new WaitForSeconds(2f);
+        }
+        else
+        {
+            // Standard delay for other patterns
+            yield return new WaitForSeconds(0.5f);
+        }
 
             // Remove this line as damage is now handled in CheckPlayerInCell
             // if (player != null && !player.IsDodging())

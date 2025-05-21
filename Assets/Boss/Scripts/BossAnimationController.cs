@@ -21,6 +21,7 @@ public class BossAnimationController : MonoBehaviour
     [SerializeField] private GameObject lightningStrikePrefab;
     [SerializeField] private float lightningLifetime = 0.6f; // match animation length
     [SerializeField] private GameObject warningFlashPrefab;
+    [SerializeField] private GameObject warningFastFlashPrefab;
     [SerializeField] private Transform leftFlashPoint;
     [SerializeField] private Transform rightFlashPoint;
     [SerializeField] private float warningFlashDuration = .1f;
@@ -43,6 +44,8 @@ public class BossAnimationController : MonoBehaviour
     private const string LEFT_SWIPE = "LeftSwipe";
     private const string RIGHT_SWIPE = "RightSwipe";
     private const string DEATH = "Die";
+    private const string TRIPLE_LEFT_SWIPE = "TripleLeftSwipe";
+    private const string TRIPLE_RIGHT_SWIPE = "TripleRightSwipe";
     
     private Animator animator;
     private BossController bossController;
@@ -56,6 +59,7 @@ public class BossAnimationController : MonoBehaviour
         Right,
         Both
     }
+    private AttackType currentPattern;
     private AttackDirection currentAttackDirection = AttackDirection.None;
 
     void Awake()
@@ -129,7 +133,9 @@ public class BossAnimationController : MonoBehaviour
         AttackType.Projectile, 
         AttackType.LeftSwipe, 
         AttackType.RightSwipe, 
-        AttackType.Projectile 
+        AttackType.Projectile,
+	AttackType.TripleLeftSwipe, 
+	AttackType.TripleRightSwipe
     };
     private int currentAttackIndex = 0;
     
@@ -138,7 +144,9 @@ public class BossAnimationController : MonoBehaviour
         Projectile,
         LeftSwipe,
         RightSwipe,
-        SpecialAttack
+        SpecialAttack,
+	TripleLeftSwipe,
+	TripleRightSwipe
     }
     
     /// <summary>
@@ -169,6 +177,12 @@ public class BossAnimationController : MonoBehaviour
                 break;
             case AttackType.SpecialAttack:
                 StartCoroutine(PlaySpecialAttackAnimation());
+                break;
+	    case AttackType.TripleLeftSwipe:
+                StartCoroutine(PlayTripleLeftSwipeAttack());
+                break;
+	    case AttackType.TripleRightSwipe:
+                StartCoroutine(PlayTripleRightSwipeAttack());
                 break;
         }
     }
@@ -203,6 +217,19 @@ public class BossAnimationController : MonoBehaviour
         
         return positions;
     }
+
+    private IEnumerator SpawnLightningSequence(bool isRightSide)
+{
+    int repetitions = 3;
+    lightningLifetime = 0.3f;
+    float delayBetweenStrikes = 1f; // Adjust delay as needed
+
+    for (int i = 0; i < repetitions; i++)
+    {
+        SpawnLightningInQuadrant(isRightSide);
+        yield return new WaitForSeconds(delayBetweenStrikes);
+    }
+}
     
     /// <summary>
     /// Left swipe attack - hits left 2 columns of 3x3 grid
@@ -288,6 +315,85 @@ public class BossAnimationController : MonoBehaviour
 
         currentAttackDirection = AttackDirection.None;
 
+        // Return to idle
+        isPlayingAnimation = false;
+    }
+
+    private IEnumerator PlayTripleLeftSwipeAttack()
+    {
+        isPlayingAnimation = true;
+	currentAttackDirection = AttackDirection.Right;
+        
+        // Play animation
+        PlayAnimation(TRIPLE_LEFT_SWIPE);
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(SpawnLightningSequence(false));
+
+        // Wait for animation to reach the hit frame
+        yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
+        
+        // Get grid positions
+        Vector3[,] gridPositions = GetGridPositions();
+        
+        // Hit the left 2 columns
+        for (int x = 0; x < 2; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                // Spawn effect at the attack point
+                if (leftSwipeEffect != null)
+                {
+                    Instantiate(leftSwipeEffect, gridPositions[x, y], leftSwipeSpawnPoint.rotation);
+                }
+                
+                // Check if player is in this grid cell and deal damage
+                CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
+            }
+        }
+        
+        // Wait for animation to complete
+        yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
+	currentAttackDirection = AttackDirection.None;
+        
+        // Return to idle
+        isPlayingAnimation = false;
+    }
+
+    private IEnumerator PlayTripleRightSwipeAttack()
+    {
+        isPlayingAnimation = true;
+	currentAttackDirection = AttackDirection.Left;
+        
+        // Play animation
+        PlayAnimation(TRIPLE_RIGHT_SWIPE);
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(SpawnLightningSequence(true));
+
+        // Wait for animation to reach the hit frame
+        yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
+        
+        // Get grid positions
+        Vector3[,] gridPositions = GetGridPositions();
+        
+        // Hit the left 2 columns
+        for (int x = 0; x < 2; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                // Spawn effect at the attack point
+                if (leftSwipeEffect != null)
+                {
+                    Instantiate(leftSwipeEffect, gridPositions[x, y], leftSwipeSpawnPoint.rotation);
+                }
+                
+                // Check if player is in this grid cell and deal damage
+                CheckPlayerInCell(gridPositions[x, y], gridSpacing / 2);
+            }
+        }
+        
+        // Wait for animation to complete
+        yield return new WaitForSeconds(attackAnimationDuration * 0.5f);
+        
         // Return to idle
         isPlayingAnimation = false;
     }
@@ -614,4 +720,17 @@ if (warningFlashPrefab != null && rightFlashPoint != null)
         Destroy(flash, warningFlashDuration);
     }
 }
+
+private void SetCurrentAttackType(AttackType attack)
+{
+	currentPattern = attack;
 }
+
+public AttackType GetCurrentAttackType()
+{
+	return currentPattern;
+}
+}
+
+
+    

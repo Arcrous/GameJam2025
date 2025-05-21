@@ -144,12 +144,16 @@ public class BossController : MonoBehaviour
 
             bool isMatch = false;
 
+            Debug.Log("Is the Only One?: " + isOnlyOneTrait);
+
             if (isOnlyOneTrait && borderImage.color == onlyOneGoldColor)
             {
+                Debug.Log("Revealing the ONLY ONE trait: " + traitType);
                 isMatch = true;
             }
-            else if (!isOnlyOneTrait)
+            else
             {
+                Debug.Log("Revealing a regular weakness: " + traitType);
                 Trait trait = TraitManager.Instance.GetTraitByType(traitType);
                 if (trait != null && questionMark.color == trait.displayColor)
                 {
@@ -173,12 +177,18 @@ public class BossController : MonoBehaviour
                     {
                         borderImage.color = trait.displayColor; // Set the border color to the trait color
                     }
+                    else
+                    {
+                        Debug.Log("Keeping color for Only One trait");
+                        // For OnlyOne trait, keep the gold border but update the icon
+                        borderImage.color = onlyOneGoldColor;
+                    }
 
                     if (weaknessRevealEffect != null)
                     {
                         Instantiate(weaknessRevealEffect, mainImage.transform.position, Quaternion.identity);
                     }
-                    break;
+                    //break;
                 }
             }
         }
@@ -304,18 +314,24 @@ public class BossController : MonoBehaviour
         // Check if player has traits that match boss weaknesses
         foreach (TraitType trait in playerTraits)
         {
-            if (weaknesses.Contains(trait))
-            {
                 RevealWeakness(trait); // Show the weakness icon
                 damageMultiplier += 0.5f; // Stack 50% more damage per weakness
                 wasWeak = true;
-            }
         }
 
         // Check for "Only One" trait damage bonus
         OnlyOneBoss onlyOneBoss = GetComponent<OnlyOneBoss>();
         if (onlyOneBoss != null)
         {
+            // Check if player has the Only One trait
+            TraitType onlyOneTrait = onlyOneBoss.GetOnlyOneTrait();
+            if (playerTraits.Contains(onlyOneTrait))
+            {
+                // Reveal the Only One trait weakness icon
+                RevealWeakness(onlyOneTrait);
+                wasWeak = true;
+            }
+
             float onlyOneMultiplier = onlyOneBoss.GetBonusDamageMultiplier(playerTraits);
             damageMultiplier *= onlyOneMultiplier;
         }

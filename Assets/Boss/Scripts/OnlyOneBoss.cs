@@ -20,7 +20,7 @@ public class OnlyOneBoss : MonoBehaviour
     private BossController bossController;
     private bool onlyOneRevealed = false;
     
-    void Start()
+    void Awake()
     {
         bossController = GetComponent<BossController>();
         

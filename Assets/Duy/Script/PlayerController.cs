@@ -292,8 +292,6 @@ public class PlayerController : MonoBehaviour
         BossController boss = FindFirstObjectByType<BossController>();
         if (boss != null)
         {
-            Debug.Log("No boss found to attack!");
-
             // Get player traits
             PlayerTraitSystem traitSystem = GetComponent<PlayerTraitSystem>();
             List<TraitType> playerTraits = new List<TraitType>();

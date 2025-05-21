@@ -938,6 +938,30 @@ PrefabInstance:
       propertyPath: 'attackPattern.Array.data[1]'
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: availableAttacks.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: 'availableAttacks.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: 'availableAttacks.Array.data[1]'
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: 'availableAttacks.Array.data[2]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: 'availableAttacks.Array.data[3]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876334745399543918, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
+      propertyPath: 'availableAttacks.Array.data[4]'
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3248899478854739930, guid: ce06ac6008ff7ab4494d8e8a615ffa04, type: 3}
       propertyPath: onlyOneRevealText
       value: 

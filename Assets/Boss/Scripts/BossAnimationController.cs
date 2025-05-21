@@ -143,16 +143,10 @@ public class BossAnimationController : MonoBehaviour
     }
     
     [Header("Attack Pattern")]
-    [SerializeField] private AttackType[] attackPattern = new AttackType[] { 
-        AttackType.Projectile, 
-        AttackType.LeftSwipe, 
-        AttackType.RightSwipe, 
-        AttackType.Projectile,
-	AttackType.TripleLeftSwipe, 
-	AttackType.TripleRightSwipe
-    };
-    private int currentAttackIndex = 0;
-    
+    [SerializeField] private bool useRandomAttacks = true;
+    [SerializeField] private AttackType[] availableAttacks;
+
+
     public enum AttackType
     {
         Projectile,
@@ -168,16 +162,13 @@ public class BossAnimationController : MonoBehaviour
     /// </summary>
     public void PlayNextAttackInPattern()
     {
-        if (isPlayingAnimation || attackPattern.Length == 0)
+        if (isPlayingAnimation || availableAttacks == null || availableAttacks.Length == 0)
             return;
             
         // Get the next attack in the pattern
-        AttackType nextAttack = attackPattern[currentAttackIndex];
+        AttackType nextAttack = availableAttacks[Random.Range(0, availableAttacks.Length)];
 	SetCurrentAttackType(nextAttack);
-        
-        // Move to the next attack in the pattern (loop around)
-        currentAttackIndex = (currentAttackIndex + 1) % attackPattern.Length;
-        
+
         // Execute the attack
         switch (nextAttack)
         {

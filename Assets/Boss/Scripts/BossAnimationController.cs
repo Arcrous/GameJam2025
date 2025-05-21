@@ -389,13 +389,77 @@ public class BossAnimationController : MonoBehaviour
             // Only deal damage if:
             // 1. Player is in the cell AND
             // 2. Player is not dodging OR is dodging but in the wrong direction
-            if (distance <= cellRadius && !player.IsDodging())
+            if (distance <= cellRadius)
             {
-                player.TakeDamage(bossController.attackPower);
+                bool shouldTakeDamage = false;
+
+                if (!player.IsDodging())
+                {
+                    // Player is not dodging at all
+                    shouldTakeDamage = true;
+                }
+                else
+                {
+                    // Player is dodging, but check if it's in the wrong direction
+                    bool isDodgingInWrongDirection = IsPlayerDodgingInWrongDirection();
+
+                    if (isDodgingInWrongDirection)
+                    {
+                        shouldTakeDamage = true;
+                    }
+                }
+
+                if (shouldTakeDamage)
+                {
+                    player.TakeDamage(bossController.attackPower);
+                }
             }
         }
     }
-    
+
+    /// <summary>
+    /// Determines if the player is dodging in the wrong direction relative to the attack
+    /// </summary>
+    private bool IsPlayerDodgingInWrongDirection()
+    {
+        BossController boss = GetComponent<BossController>();
+        if (boss == null) return false;
+
+        AttackDirection attackDir = currentAttackDirection;
+
+        // Get dodge direction from player controller
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player == null) return false;
+
+        // We need to add a property to PlayerController to know the dodge direction
+        bool isDodgingLeft = player.IsCurrentlyDodgingLeft();
+
+        // Check if dodge direction is wrong for current attack
+        if (attackDir == AttackDirection.Left && isDodgingLeft)
+        {
+            // Boss attacking from right, player dodging left = CORRECT
+            return false;
+        }
+        else if (attackDir == AttackDirection.Right && !isDodgingLeft)
+        {
+            // Boss attacking from left, player dodging right = CORRECT
+            return false;
+        }
+        else if (attackDir == AttackDirection.Both)
+        {
+            // For attacks that hit everywhere (like special attack), any dodge is wrong
+            return true;
+        }
+        else if (attackDir == AttackDirection.None)
+        {
+            // If no attack direction, dodge is pointless
+            return true;
+        }
+
+        // In all other cases, player is dodging in the wrong direction
+        return true;
+    }
+
     /// <summary>
     /// Death animation and cleanup
     /// </summary>

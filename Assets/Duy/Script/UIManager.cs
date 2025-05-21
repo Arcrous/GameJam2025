@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Combat UI")]
     public Button attackButton;
+    public Button chargeButton;
 
     [Header("Debug")]
     [SerializeField] private bool showAllTraits = false; // Set to true to show all available traits
@@ -39,6 +40,9 @@ public class UIManager : MonoBehaviour
 
         if (attackButton != null)
             attackButton.onClick.AddListener(OnAttackButtonClicked);
+
+        if(chargeButton != null)
+            chargeButton.onClick.AddListener(OnChargeButtonClicked);
 
         // Subscribe to turn changes
         TurnManager.Instance.OnTurnChanged += UpdateButtonsForTurnState;
@@ -56,10 +60,25 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void OnChargeButtonClicked()
+    {
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
+        {
+            player.Charge();
+
+            // End player turn
+            TurnManager.Instance.EndPlayerTurn();
+        }
+    }
+
     private void UpdateButtonsForTurnState(TurnState newState)
     {
         if (attackButton != null)
             attackButton.interactable = (newState == TurnState.PlayerTurn);
+
+        if(chargeButton != null)
+            chargeButton.interactable = (newState == TurnState.PlayerTurn);
     }
 
     private void HideAllPanels()

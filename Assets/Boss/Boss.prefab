@@ -173,7 +173,7 @@ MonoBehaviour:
   hinted: 0
   onlyOneRevealPanel: {fileID: 0}
   onlyOneRevealText: {fileID: 0}
-  revealDuration: 3
+  revealDuration: 2
 --- !u!114 &7521228810499705950
 MonoBehaviour:
   m_ObjectHideFlags: 0

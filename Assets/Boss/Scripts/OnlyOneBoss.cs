@@ -8,7 +8,7 @@ public class OnlyOneBoss : MonoBehaviour
 {
     [Header("Only One Theme Implementation")]
     [SerializeField] private TraitType onlyOneTrait; // The ONE trait that can deal critical damage
-    [SerializeField] private float onlyOneMultiplier = 3.0f; // Massive multiplier for the ONE trait
+    [SerializeField] private float onlyOneMultiplier = 5.0f; // Massive multiplier for the ONE trait
     [SerializeField] private GameObject onlyOneVFX; // Special effect for the ONE trait
     public bool hinted = false;
     

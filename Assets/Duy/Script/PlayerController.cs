@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public int currentHealth;
     public int maxHealth = 100;
     public int attackPower = 10;
+    public int chargePower = 0;
 
     [Header("Combat")]
     public float dodgeCooldown = 0.5f;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private KeyCode dodgeLeftKey = KeyCode.A;
     [SerializeField] private KeyCode dodgeRightKey = KeyCode.D;
+    private bool dodgingLeft = false;
 
     [Header("Movement Boundaries")]
     [SerializeField] private float minX = -5f; // Left boundary
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] GameObject slashEffect;
     [SerializeField] GameObject counterEffect;
+    [SerializeField] GameObject chargeEffect;
     [SerializeField] Transform attackPoint;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] TMPro.TextMeshProUGUI dodgeCounterText;
@@ -114,13 +117,18 @@ public class PlayerController : MonoBehaviour
             if (t >= 1.0f)
             {
                 isDodgeMoving = false;
-                isInvulnerable = true; // Make sure player is invulnerable during dodge
 
                 // After dodge animation completes, return to original position after short delay
                 StartCoroutine(ReturnToPositionAfterDelay(0.2f));
             }
         }
     }
+
+    public bool IsCurrentlyDodgingLeft()
+    {
+        return isDodging && dodgingLeft;
+    }
+
 
     // New function for QTE-based dodge
     public void DodgeInDirection(bool dodgeLeft)
@@ -132,8 +140,10 @@ public class PlayerController : MonoBehaviour
         isDodging = true;
         canDodge = false;
         isDodgeMoving = true;
-        isInvulnerable = true;
         dodgeTimer = 0f;
+
+        // Track dodge direction
+        dodgingLeft = dodgeLeft;
 
         // Get current boss attack direction
         BossAnimationController bossAnimController = FindFirstObjectByType<BossAnimationController>();
@@ -211,9 +221,6 @@ public class PlayerController : MonoBehaviour
                 Destroy(dodgeVFX, 0.61f);
             }
         }
-
-        // Increment successful dodge counter
-        //dodgeCount++;
 
         // Start the invulnerability
         StartCoroutine(DodgeInvulnerabilityCoroutine());
@@ -297,7 +304,22 @@ public class PlayerController : MonoBehaviour
             }
 
             Debug.Log("Player attacked boss!");
-            boss.TakeDamage(attackPower, playerTraits);
+
+            if (chargePower > 0)
+            {
+                int finalDamage = attackPower * chargePower;
+                boss.TakeDamage(finalDamage, playerTraits);
+            }
+            else
+            {
+                boss.TakeDamage(attackPower, playerTraits);
+            }
+        }
+
+        if(chargePower > 0)
+        {
+            // Reset charge power after attack
+            chargePower = 0;
         }
 
         // Play attack sound
@@ -347,6 +369,16 @@ public class PlayerController : MonoBehaviour
 
         // Reset dodge counter
         dodgeCount = 0;
+    }
+
+    public void Charge()
+    {
+        chargePower += 1;
+        if (chargeEffect != null)
+        {
+            GameObject chargeFX = Instantiate(chargeEffect, this.transform.position, this.transform.rotation);
+            Destroy(chargeFX, 0.5f);
+        }
     }
 
     public bool IsDodging()
